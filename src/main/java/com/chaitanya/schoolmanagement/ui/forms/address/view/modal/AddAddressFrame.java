@@ -1,4 +1,4 @@
-package com.chaitanya.schoolmanagement.ui.forms.client.view.modal;
+package com.chaitanya.schoolmanagement.ui.forms.address.view.modal;
 
 
 import com.chaitanya.schoolmanagement.util.constant.ConstMessagesEN;
@@ -13,10 +13,10 @@ import java.awt.*;
 @Component
 @AllArgsConstructor
 @Getter
-public class AddClientFrame extends JDialog {
+public class AddAddressFrame extends JDialog {
 
-    private final FormPanel formPanel;
-    private final FormBtnPanel formBtnPanel;
+    private final AddressFormPanel formPanel;
+    private final AddressFormBtnPanel formBtnPanel;
 
     @PostConstruct
     private void prepareFrame() {
@@ -26,8 +26,8 @@ public class AddClientFrame extends JDialog {
     }
 
     private void setFrameUp() {
-        setTitle(ConstMessagesEN.DialogTitles.STUDENT_MODAL);
-        setDefaultCloseOperation(HIDE_ON_CLOSE);
+        setTitle(ConstMessagesEN.DialogTitles.ADDRESS_MODAL);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
         setModal(true);
@@ -37,5 +37,4 @@ public class AddClientFrame extends JDialog {
         add(formPanel, BorderLayout.CENTER);
         add(formBtnPanel, BorderLayout.SOUTH);
     }
-
 }

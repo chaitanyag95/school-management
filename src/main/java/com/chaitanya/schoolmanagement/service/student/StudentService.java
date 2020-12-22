@@ -1,7 +1,7 @@
 package com.chaitanya.schoolmanagement.service.student;
 
 
-import com.chaitanya.schoolmanagement.model.Student;
+import com.chaitanya.schoolmanagement.model.student.Student;
 import com.chaitanya.schoolmanagement.util.annotation.TransactionalReadOnly;
 import com.chaitanya.schoolmanagement.util.annotation.TransactionalWrite;
 
@@ -14,5 +14,8 @@ public interface StudentService {
 
     @TransactionalWrite
     void save(Student student);
+
+    @TransactionalWrite
+    void remove(Student student);
 
 }

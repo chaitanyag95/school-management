@@ -80,8 +80,6 @@ public interface ConstMessagesPL {
     }
 
     interface ValidationMessages {
-        String REQUIRED_DATA_NOT_FILLED_OR_BAD_DATA = "Nie podano wszystkich wymaganych danych lub wprowadzono błędne dane.";
-        String PESEL_LENGTH_INCORRECT = "PESEL powinien zawierać 11 znaków.";
-        String DATE_FROM_MUST_BE_EARLIER_THAN_TO_DATE = "Data od musi być wcześniejsza niż data do.";
+        String REQUIRED_DATA_NOT_FILLED_OR_BAD_DATA = "All Fields are Mandatory";
     }
 }

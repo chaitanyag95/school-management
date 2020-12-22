@@ -1,4 +1,4 @@
-package com.chaitanya.schoolmanagement.model;
+package com.chaitanya.schoolmanagement.model.student;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,5 +27,14 @@ public class Student {
         this.email = email;
         this.course = course;
         this.phoneNumber = phoneNumber;
+    }
+
+
+    public void setStudent(Student student) {
+        this.id = student.getId();
+        this.fullName = student.getFullName();
+        this.course = student.getCourse();
+        this.email = student.getEmail();
+        this.phoneNumber = student.getPhoneNumber();
     }
 }

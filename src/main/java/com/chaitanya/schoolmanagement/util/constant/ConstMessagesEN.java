@@ -25,15 +25,15 @@ public interface ConstMessagesEN {
 
     interface Labels {
         String MAIN_MENU = "Hotel reservations";
-        String CLIENTS = "Clients";
-        String RESERVATIONS = "Reservations";
+        String CLIENTS = "Students";
+        String ACTION = "Actions";
         String ADDRESSES = "Addresses";
         String ADD_BTN = "Add";
         String CANCEL_BTN = "Cancel";
         String REMOVE_BTN = "Remove";
         String NAME = "Name";
         String COURSE = "Course";
-        String PESEL = "Pesel";
+        String EDIT = "Edit Student";
         String PHONE_NUMBER = "Phone number";
         String EMAIL = "E-mail";
         String ADDRESS = "Address";

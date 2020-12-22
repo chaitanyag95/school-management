@@ -1,7 +1,7 @@
 package com.chaitanya.schoolmanagement.service.student;
 
 
-import com.chaitanya.schoolmanagement.model.Student;
+import com.chaitanya.schoolmanagement.model.student.Student;
 import com.chaitanya.schoolmanagement.repository.StudentRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

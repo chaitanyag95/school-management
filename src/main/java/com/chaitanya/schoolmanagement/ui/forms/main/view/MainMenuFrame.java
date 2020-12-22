@@ -17,6 +17,7 @@ public class MainMenuFrame extends JFrame {
 
     private JButton createStudentBtn;
     private JButton studentListBtn;
+    private JButton addressesBtn;
 
     @PostConstruct
     private void prepareFrame() {
@@ -39,7 +40,9 @@ public class MainMenuFrame extends JFrame {
     private void initComponents() {
         createStudentBtn = new JButton(ConstMessagesEN.Labels.CREATE_STUDENT);
         studentListBtn = new JButton(ConstMessagesEN.Labels.STUDENT_LIST);
+        addressesBtn = new JButton(ConstMessagesEN.Labels.ADDRESSES);
 
+        add(addressesBtn);
         add(createStudentBtn);
         add(studentListBtn);
     }
