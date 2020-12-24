@@ -1,4 +1,4 @@
-package com.chaitanya.schoolmanagement.ui.forms.address.view.modal;
+package com.chaitanya.schoolmanagement.ui.forms.course.view;
 
 
 import com.chaitanya.schoolmanagement.util.constant.ConstMessagesEN;
@@ -13,28 +13,31 @@ import java.awt.*;
 @Component
 @AllArgsConstructor
 @Getter
-public class AddAddressFrame extends JDialog {
+public class CourseTableFrame extends JFrame {
 
-    private final AddressFormPanel formPanel;
-    private final AddressFormBtnPanel formBtnPanel;
+    private static final int DEFAULT_WIDTH = 500;
+    private static final int DEFAULT_HEIGHT = 300;
+
+    private final CourseTablePanel tablePanel;
+    private final CourseTableBtnPanel tableBtnPanel;
 
     @PostConstruct
     private void prepareFrame() {
         setFrameUp();
         initComponents();
-        pack();
     }
 
     private void setFrameUp() {
-        setTitle(ConstMessagesEN.DialogTitles.ADDRESS_MODAL);
+        setTitle(ConstMessagesEN.Labels.COURSES);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
         setLocationRelativeTo(null);
         setResizable(false);
-        setModal(true);
     }
 
     private void initComponents() {
-        add(formPanel, BorderLayout.CENTER);
-        add(formBtnPanel, BorderLayout.SOUTH);
+        add(tablePanel, BorderLayout.CENTER);
+        add(tableBtnPanel, BorderLayout.SOUTH);
     }
+
 }

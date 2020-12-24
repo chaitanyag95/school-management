@@ -18,4 +18,20 @@ public interface StudentService {
     @TransactionalWrite
     void remove(Student student);
 
+    @TransactionalWrite
+    Student updateStudentDetails(Student student);
+
+    @TransactionalReadOnly
+    Student getStudentById(String studentId);
+
+    @TransactionalReadOnly
+    Student getStudentByEmail(String email);
+
+    @TransactionalReadOnly
+    Boolean isStudentExistByEmail(String email);
+
+    @TransactionalWrite
+    void saveStudentsByBatch(List<Student> students);
+
+
 }

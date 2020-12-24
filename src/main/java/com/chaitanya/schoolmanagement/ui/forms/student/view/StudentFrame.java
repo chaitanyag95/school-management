@@ -28,7 +28,7 @@ public class StudentFrame extends JFrame {
     }
 
     private void setFrameUp() {
-        setTitle(ConstMessagesEN.Labels.CLIENTS);
+        setTitle(ConstMessagesEN.Labels.STUDENTS);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
         setLocationRelativeTo(null);

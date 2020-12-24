@@ -29,7 +29,7 @@ public class AddStudentFrame extends JDialog {
         setTitle(ConstMessagesEN.DialogTitles.STUDENT_MODAL);
         setDefaultCloseOperation(HIDE_ON_CLOSE);
         setLocationRelativeTo(null);
-        setResizable(false);
+        setResizable(true);
         setModal(true);
     }
 

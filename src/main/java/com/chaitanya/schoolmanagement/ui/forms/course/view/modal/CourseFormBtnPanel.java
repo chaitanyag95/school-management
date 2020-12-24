@@ -1,4 +1,4 @@
-package com.chaitanya.schoolmanagement.ui.forms.address.view.modal;
+package com.chaitanya.schoolmanagement.ui.forms.course.view.modal;
 
 import com.chaitanya.schoolmanagement.util.constant.ConstMessagesEN;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import javax.swing.*;
 
 @Component
 @Getter
-public class AddressFormBtnPanel extends JPanel {
+public class CourseFormBtnPanel extends JPanel {
 
     private JButton saveBtn;
     private JButton cancelBtn;

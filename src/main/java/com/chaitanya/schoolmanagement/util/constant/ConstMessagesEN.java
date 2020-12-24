@@ -12,8 +12,15 @@ public interface ConstMessagesEN {
         String ROOM_TYPE_MODAL = "Adding room types";
         String ROOM_MODAL = "Adding rooms";
         String RATE_MODAL = "Adding rates";
-        String ROOM_X_RESERVATION_MODAL = "Adding room reservations";
+        String COURSE_MODAL = "Adding Courses";
+        String TEACHER_MODAL = "Add Teacher";
+        String ADMIN_LOGIN_MODAL = "Admin Login";
+        String STUDENT_LOGIN_MODAL = "Student Login";
+        String TEACHER_LOGIN_MODAL = "Teacher Login";
+        String WELCOME_STUDENT_MODAL = "Welcome Student";
     }
+
+    ;
 
     interface Messages {
         String WINDOWS_STYLE_LOADING_ERROR_MESSAGE = "There was an error while loading windows look an feel: ";
@@ -25,63 +32,34 @@ public interface ConstMessagesEN {
 
     interface Labels {
         String MAIN_MENU = "Hotel reservations";
-        String CLIENTS = "Students";
-        String ACTION = "Actions";
+        String LOGIN = "Login";
+        String STUDENTS = "Students";
+        String WELCOME_STUDENT = "Welcome";
+        String OK = "Ok";
+        String UPDATE_STUDENT = "Update Details";
         String ADDRESSES = "Addresses";
+        String COURSES = "Courses";
+        String TEACHERS = "Teachers";
+        String ADMIN = "Admin";
         String ADD_BTN = "Add";
+        String LOGIN_BTN = "Login";
+        String UPDATE_BTN = "Update";
         String CANCEL_BTN = "Cancel";
         String REMOVE_BTN = "Remove";
         String NAME = "Name";
+        String PASSWORD = "Password";
         String COURSE = "Course";
         String EDIT = "Edit Student";
         String PHONE_NUMBER = "Phone number";
         String EMAIL = "E-mail";
-        String ADDRESS = "Address";
-        String STREET = "Street";
-        String HOUSE_NUMBER = "House number";
-        String FLAT_NUMBER = "Flat number";
-        String CITY = "City";
-        String POSTAL_CODE = "Post code";
-        String RESERVATION_STATUS = "Reservation status";
-        String RESERVATION_STATUSES = "Reservation statuses";
-        String PAYMENT_METHODS = "Payment methods";
-        String PAYMENTS = "Payments";
-        String PAYMENT_METHOD = "Payment method";
-        String VALUE = "Value";
-        String DATE_OF_PAYMENT = "Date of payment";
-        String PAYMENT = "Payment";
-        String CLIENT = "Client";
-        String FROM_DATE = "From";
-        String TO_DATE = "To";
-        String RESERVATION_DATE = "Reservation date";
-        String AMOUNT = "Sum";
-        String ROOM_STATUS = "Room status";
-        String ROOM_STATUSES = "Room statuses";
-        String ROOM_STATUS_DESCRIPTION = "Room status description";
-        String ROOM_TYPE = "Room type";
-        String ROOM_MULTIPLIER = "Multiplier";
-        String ROOM_TYPES = "Room types";
-        String ROOM_TYPE_DESCRIPTION = "Room type description";
-        String ROOM_NUMBER_OF_PEOPLE = "Number of people";
-        String ROOM_DESCRIPTION = "Description";
-        String ROOMS = "Rooms";
-        String ROOM = "Room";
-        String BASIC_RATE = "Basic rate";
-        String RATES = "Rates";
-        String ROOM_X_RESERVATIONS = "Rooms reservations";
-        String RESERVATION = "Reservation";
-        String PRICE = "Price";
-        String CREATE_STUDENT = "Insert Student Details";
-        String STUDENT_LIST = "Student List";
-        String PAYMENT_COUNT = "Payment count";
-        String NUMBER_OF_COUNT = "Number of count";
-        String NUMBER_OF_RESERVATIONS = "Number of reservations";
-        String CLIENT_RESERVATIONS = "Client's reservations";
+        String EDIT_TEACHER = "Edit Teacher";
+        String COURSE_NAME = "Course Name";
+        String STUDENT = "Student";
     }
 
     interface ValidationMessages {
         String REQUIRED_DATA_NOT_FILLED_OR_BAD_DATA = "Not all required fields have been filled or filled data is incorrect";
-        String PESEL_LENGTH_INCORRECT = "PESEL should contain 11 characters.";
-        String DATE_FROM_MUST_BE_EARLIER_THAN_TO_DATE = "Date from must be earlier than date to";
+        String USER_ALREADY_EXIST = "User with this email already exist";
+        String INVALID_CREDENTIALS = "Wrong Credential! Please try again !!!! ";
     }
 }

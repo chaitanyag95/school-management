@@ -1,19 +1,19 @@
-package com.chaitanya.schoolmanagement.ui.forms.address.controller;
+package com.chaitanya.schoolmanagement.ui.forms.course.controller;
 
 
-import com.chaitanya.schoolmanagement.model.address.AddressEntity;
-import com.chaitanya.schoolmanagement.service.address.AddressService;
-import com.chaitanya.schoolmanagement.ui.forms.address.model.AddressTableModel;
-import com.chaitanya.schoolmanagement.ui.forms.address.view.AddressTableBtnPanel;
-import com.chaitanya.schoolmanagement.ui.forms.address.view.AddressTableFrame;
-import com.chaitanya.schoolmanagement.ui.forms.address.view.modal.AddAddressFrame;
-import com.chaitanya.schoolmanagement.ui.forms.address.view.modal.AddressFormBtnPanel;
-import com.chaitanya.schoolmanagement.ui.forms.address.view.modal.AddressFormPanel;
+import com.chaitanya.schoolmanagement.model.course.Course;
+import com.chaitanya.schoolmanagement.service.course.CourseService;
+import com.chaitanya.schoolmanagement.ui.forms.course.model.CourseTableModel;
+import com.chaitanya.schoolmanagement.ui.forms.course.view.CourseTableBtnPanel;
+import com.chaitanya.schoolmanagement.ui.forms.course.view.CourseTableFrame;
+import com.chaitanya.schoolmanagement.ui.forms.course.view.modal.AddCourseFrame;
+import com.chaitanya.schoolmanagement.ui.forms.course.view.modal.CourseFormBtnPanel;
+import com.chaitanya.schoolmanagement.ui.forms.course.view.modal.CourseFormPanel;
 import com.chaitanya.schoolmanagement.ui.shared.controller.AbstractFrameController;
 import com.chaitanya.schoolmanagement.util.constant.ConstMessagesEN;
 import com.chaitanya.schoolmanagement.util.notification.Notifications;
 import com.chaitanya.schoolmanagement.validation.ValidationError;
-import com.chaitanya.schoolmanagement.validation.address.AddressValidator;
+import com.chaitanya.schoolmanagement.validation.course.CourseValidator;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 
@@ -24,18 +24,18 @@ import java.util.Optional;
 
 @Controller
 @AllArgsConstructor
-public class AddressController extends AbstractFrameController {
+public class CourseController extends AbstractFrameController {
 
-    private final AddressTableFrame tableFrame;
-    private final AddAddressFrame addFrame;
-    private final AddressTableModel tableModel;
-    private final AddressService addressService;
-    private final AddressValidator validator;
+    private final CourseTableFrame tableFrame;
+    private final AddCourseFrame addFrame;
+    private final CourseTableModel tableModel;
+    private final CourseService courseService;
+    private final CourseValidator validator;
 
     @PostConstruct
     private void prepareListeners() {
-        AddressTableBtnPanel tableBtnPanel = tableFrame.getTableBtnPanel();
-        AddressFormBtnPanel formBtnPanel = addFrame.getFormBtnPanel();
+        CourseTableBtnPanel tableBtnPanel = tableFrame.getTableBtnPanel();
+        CourseFormBtnPanel formBtnPanel = addFrame.getFormBtnPanel();
 
         registerAction(tableBtnPanel.getAddBtn(), (e) -> showAddModal());
         registerAction(tableBtnPanel.getRemoveBtn(), (e) -> removeEntity());
@@ -50,7 +50,7 @@ public class AddressController extends AbstractFrameController {
     }
 
     private void loadEntities() {
-        List<AddressEntity> entities = addressService.findAll();
+        List<Course> entities = courseService.findAll();
         tableModel.clear();
         tableModel.addEntities(entities);
     }
@@ -64,14 +64,14 @@ public class AddressController extends AbstractFrameController {
     }
 
     private void saveEntity() {
-        AddressFormPanel formPanel = addFrame.getFormPanel();
-        AddressEntity entity = formPanel.getEntityFromForm();
+        CourseFormPanel formPanel = addFrame.getFormPanel();
+        Course entity = formPanel.getEntityFromForm();
         Optional<ValidationError> errors = validator.validate(entity);
         if (errors.isPresent()) {
             ValidationError validationError = errors.get();
             Notifications.showFormValidationAlert(validationError.getMessage());
         } else {
-            addressService.save(entity);
+            courseService.save(entity);
             tableModel.addEntity(entity);
             closeModalWindow();
         }
@@ -92,8 +92,8 @@ public class AddressController extends AbstractFrameController {
                         ConstMessagesEN.Messages.ALERT_TILE,
                         JOptionPane.ERROR_MESSAGE);
             } else {
-                AddressEntity entity = tableModel.getEntityByRow(selectedRow);
-                addressService.remove(entity);
+                Course entity = tableModel.getEntityByRow(selectedRow);
+                courseService.remove(entity);
                 tableModel.removeRow(selectedRow);
             }
         } catch (Exception e) {

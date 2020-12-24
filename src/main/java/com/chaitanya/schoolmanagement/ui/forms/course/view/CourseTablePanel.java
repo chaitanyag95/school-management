@@ -1,7 +1,7 @@
-package com.chaitanya.schoolmanagement.ui.forms.address.view;
+package com.chaitanya.schoolmanagement.ui.forms.course.view;
 
 
-import com.chaitanya.schoolmanagement.ui.forms.address.model.AddressTableModel;
+import com.chaitanya.schoolmanagement.ui.forms.course.model.CourseTableModel;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
 
@@ -11,13 +11,13 @@ import java.awt.*;
 
 @Component
 @Getter
-public class AddressTablePanel extends JPanel {
+public class CourseTablePanel extends JPanel {
 
-    private final AddressTableModel tableModel;
+    private final CourseTableModel tableModel;
 
     private JTable table;
 
-    AddressTablePanel(AddressTableModel tableModel) {
+    CourseTablePanel(CourseTableModel tableModel) {
         this.tableModel = tableModel;
     }
 

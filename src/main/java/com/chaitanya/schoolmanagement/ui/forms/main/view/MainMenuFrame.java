@@ -15,9 +15,9 @@ import java.awt.*;
 @Getter
 public class MainMenuFrame extends JFrame {
 
-    private JButton createStudentBtn;
-    private JButton studentListBtn;
-    private JButton addressesBtn;
+    private JButton studentBtn;
+    private JButton teacherBtn;
+    private JButton adminBtn;
 
     @PostConstruct
     private void prepareFrame() {
@@ -31,20 +31,19 @@ public class MainMenuFrame extends JFrame {
         setTitle(ConstMessagesEN.Labels.MAIN_MENU);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        setResizable(false);
+        setResizable(true);
         LookAndFeelUtils.setWindowsLookAndFeel();
         setLayout(new GridLayout(1, 2, 200, 200));
         setTitle("Student Management System");
     }
 
     private void initComponents() {
-        createStudentBtn = new JButton(ConstMessagesEN.Labels.CREATE_STUDENT);
-        studentListBtn = new JButton(ConstMessagesEN.Labels.STUDENT_LIST);
-        addressesBtn = new JButton(ConstMessagesEN.Labels.ADDRESSES);
-
-        add(addressesBtn);
-        add(createStudentBtn);
-        add(studentListBtn);
+        studentBtn = new JButton(ConstMessagesEN.Labels.STUDENT);
+        teacherBtn = new JButton(ConstMessagesEN.Labels.TEACHERS);
+        adminBtn = new JButton(ConstMessagesEN.Labels.ADMIN);
+        add(adminBtn);
+        add(teacherBtn);
+        add(studentBtn);
     }
 
 }

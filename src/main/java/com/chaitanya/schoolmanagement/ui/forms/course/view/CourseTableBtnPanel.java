@@ -1,4 +1,4 @@
-package com.chaitanya.schoolmanagement.ui.forms.address.view;
+package com.chaitanya.schoolmanagement.ui.forms.course.view;
 
 import com.chaitanya.schoolmanagement.util.constant.ConstMessagesEN;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import javax.swing.*;
 
 @Component
 @Getter
-public class AddressTableBtnPanel extends JPanel {
+public class CourseTableBtnPanel extends JPanel {
 
     private JButton addBtn;
     private JButton removeBtn;
