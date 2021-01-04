@@ -21,6 +21,7 @@ import org.springframework.stereotype.Controller;
 
 import javax.annotation.PostConstruct;
 import javax.swing.*;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,6 +39,7 @@ public class StudentController extends AbstractFrameController {
     private final CourseComboBoxModel courseComboBoxModel;
     private final UpdateStudentFrame updateStudentFrame;
     private final UpdateStudentFormPanel updateStudentFormPanel;
+    private final DownloadDataFrame downloadDataFrame;
 
 
     @PostConstruct
@@ -45,6 +47,7 @@ public class StudentController extends AbstractFrameController {
         TableBtnPanel tableBtnPanel = studentFrame.getTableBtnPanel();
         FormBtnPanel formBtnPanel = addStudentFrame.getFormBtnPanel();
         UpdateStudentFormBtnPanel updateStudentFormBtnPanel = updateStudentFrame.getFormBtnPanel();
+        DownloadFrameBtnPanel downloadFrameBtnPanel = downloadDataFrame.getDownloadFrameBtnPanel();
 
         registerAction(tableBtnPanel.getAddBtn(), (e) -> showAddClientModal());
         registerAction(tableBtnPanel.getRemoveBtn(), (e) -> removeClient());
@@ -52,8 +55,34 @@ public class StudentController extends AbstractFrameController {
         registerAction(formBtnPanel.getCancelBtn(), (e) -> closeModalWindow());
         registerAction(tableBtnPanel.getEditBtn(), (e) -> updateStudent());
         registerAction(updateStudentFormBtnPanel.getSaveBtn(), (e) -> updateStudentDetails());
-        registerAction(updateStudentFormBtnPanel.getSaveBtn(), (e) -> closeUpdateModalWindow());
+        registerAction(updateStudentFormBtnPanel.getCancelBtn(), (e) -> closeUpdateModalWindow());
+        registerAction(tableBtnPanel.getSaveBtn(), (e) -> showDownloadModal());
+        registerAction(downloadFrameBtnPanel.getSaveAsExcelBtn(), (e) -> {
+            try {
+                saveAsExcelFile();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        });
+        registerAction(downloadFrameBtnPanel.getSaveAsCsvBtn(), (e) -> {
+            try {
+                saveAsCsvFile();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        });
     }
+
+    private void saveAsExcelFile() throws IOException {
+        studentService.saveAsExcelFile();
+        closeDownloadModalWindow();
+    }
+
+    private void saveAsCsvFile() throws IOException {
+        studentService.downloadCsvFile();
+        closeDownloadModalWindow();
+    }
+
 
     @Override
     public void prepareAndOpenFrame() {
@@ -91,6 +120,9 @@ public class StudentController extends AbstractFrameController {
         addStudentFrame.setVisible(true);
     }
 
+    private void showDownloadModal() {
+        downloadDataFrame.setVisible(true);
+    }
 
     private void saveClient() {
         FormPanel formPanel = addStudentFrame.getFormPanel();
@@ -110,20 +142,24 @@ public class StudentController extends AbstractFrameController {
         log.info("********** updating existing student record ***********");
         UpdateStudentFormPanel formPanel = updateStudentFrame.getFormPanel();
         Student student = formPanel.getStudentFromUpdateStudentForm();
-        Optional<ValidationError> errors = clientValidator.validate(student);
+        Optional<ValidationError> errors = clientValidator.validateUpdateEntity(student);
         if (errors.isPresent()) {
             ValidationError validationError = errors.get();
             Notifications.showFormValidationAlert(validationError.getMessage());
         } else {
             studentService.updateStudentDetails(student);
             studentTableModel.addEntity(student);
-            closeModalWindow();
+            closeUpdateModalWindow();
         }
     }
 
     private void closeModalWindow() {
         addStudentFrame.getFormPanel().clearForm();
         addStudentFrame.dispose();
+    }
+
+    private void closeDownloadModalWindow() {
+        downloadDataFrame.dispose();
     }
 
     private void closeUpdateModalWindow() {

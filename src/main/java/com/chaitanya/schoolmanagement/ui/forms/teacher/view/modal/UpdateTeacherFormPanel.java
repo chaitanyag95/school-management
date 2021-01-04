@@ -1,6 +1,8 @@
 package com.chaitanya.schoolmanagement.ui.forms.teacher.view.modal;
 
+import com.chaitanya.schoolmanagement.model.course.Course;
 import com.chaitanya.schoolmanagement.model.teacher.Teacher;
+import com.chaitanya.schoolmanagement.ui.forms.student.model.CourseComboBoxModel;
 import com.chaitanya.schoolmanagement.util.border.Borders;
 import com.chaitanya.schoolmanagement.util.constant.ConstMessagesEN;
 import lombok.extern.slf4j.Slf4j;
@@ -19,18 +21,23 @@ public class UpdateTeacherFormPanel extends JPanel {
     private static final int HORIZONTAL_GAP = 0;
     private static final int VERTICAL_GAP = 20;
     private static final int TEXT_FIELD_COLUMNS = 20;
+    private final CourseComboBoxModel courseComboBoxModel;
 
 
     private JTextField nameTF;
-    private JTextField courseTF;
+    private JComboBox<Course> courseCB;
     private JTextField phoneNumberTF;
     private JTextField emailTF;
-    private String studentId;
+    private String teacherId;
 
     @PostConstruct
     private void preparePanel() {
         setPanelUp();
         initComponents();
+    }
+
+    public UpdateTeacherFormPanel(CourseComboBoxModel courseComboBoxModel) {
+        this.courseComboBoxModel = courseComboBoxModel;
     }
 
     private void setPanelUp() {
@@ -46,7 +53,7 @@ public class UpdateTeacherFormPanel extends JPanel {
 
 
         nameTF = new JTextField(TEXT_FIELD_COLUMNS);
-        courseTF = new JTextField(TEXT_FIELD_COLUMNS);
+        courseCB = new JComboBox<>(courseComboBoxModel);
         phoneNumberTF = new JTextField(TEXT_FIELD_COLUMNS);
         emailTF = new JTextField(TEXT_FIELD_COLUMNS);
 
@@ -54,7 +61,7 @@ public class UpdateTeacherFormPanel extends JPanel {
         add(nameLbl);
         add(nameTF);
         add(courseLbl);
-        add(courseTF);
+        add(courseCB);
         add(phoneNumberLbl);
         add(phoneNumberTF);
         add(emailLbl);
@@ -64,17 +71,16 @@ public class UpdateTeacherFormPanel extends JPanel {
 
     public Teacher getTeacherFromUpdateTeacherForm() {
         Teacher teacher = new Teacher();
-        teacher.setId(studentId);
+        teacher.setId(teacherId);
         teacher.setFullName(nameTF.getText());
         teacher.setEmail(emailTF.getText());
-        //teacher.setCourse(courseTF.getText());
+        teacher.setCourse(courseComboBoxModel.getSelectedItem());
         teacher.setPhoneNumber(phoneNumberTF.getText());
         return teacher;
     }
 
     public void clearForm() {
         nameTF.setText(Strings.EMPTY);
-        courseTF.setText(Strings.EMPTY);
         phoneNumberTF.setText(Strings.EMPTY);
         emailTF.setText(Strings.EMPTY);
     }
@@ -82,9 +88,9 @@ public class UpdateTeacherFormPanel extends JPanel {
     public void setTeacherForm(Teacher teacher) {
         log.info("******** setting update teacher form field **********");
         nameTF.setText(teacher.getFullName());
-        //courseTF.setText(teacher.getCourse());
+        courseCB.getModel().setSelectedItem(teacher.getCourse());
         phoneNumberTF.setText(teacher.getPhoneNumber());
         emailTF.setText(teacher.getEmail());
-        studentId = teacher.getId();
+        teacherId = teacher.getId();
     }
 }

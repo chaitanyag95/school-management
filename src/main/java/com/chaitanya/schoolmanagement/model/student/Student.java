@@ -36,6 +36,14 @@ public class Student {
         this.password = password;
     }
 
+    public Student(String id, String fullName, String email, Course course, String phoneNumber) {
+        this.id = id;
+        this.fullName = fullName;
+        this.email = email;
+        this.course = course;
+        this.phoneNumber = phoneNumber;
+    }
+
 
     public void setStudent(Student student) {
         this.id = student.getId();

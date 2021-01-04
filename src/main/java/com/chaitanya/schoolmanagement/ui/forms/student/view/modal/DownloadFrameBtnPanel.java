@@ -1,5 +1,4 @@
-package com.chaitanya.schoolmanagement.ui.forms.teacher.view.modal;
-
+package com.chaitanya.schoolmanagement.ui.forms.student.view.modal;
 
 import com.chaitanya.schoolmanagement.util.constant.ConstMessagesEN;
 import lombok.Getter;
@@ -10,11 +9,10 @@ import javax.swing.*;
 
 @Component
 @Getter
-public class TeacherFormBtnPanel extends JPanel {
-
-    private JButton saveBtn;
+public class DownloadFrameBtnPanel extends JPanel {
+    private JButton saveAsCsvBtn;
+    private JButton saveAsExcelBtn;
     private JButton cancelBtn;
-
 
     @PostConstruct
     private void initPanel() {
@@ -22,11 +20,11 @@ public class TeacherFormBtnPanel extends JPanel {
     }
 
     private void initComponents() {
-        saveBtn = new JButton(ConstMessagesEN.Labels.ADD_BTN);
-        add(saveBtn);
-
+        saveAsCsvBtn = new JButton(ConstMessagesEN.Labels.SaveAsCSV);
+        add(saveAsCsvBtn);
+        saveAsExcelBtn = new JButton(ConstMessagesEN.Labels.SaveAsExcel);
+        add(saveAsExcelBtn);
         cancelBtn = new JButton(ConstMessagesEN.Labels.CANCEL_BTN);
         add(cancelBtn);
     }
-
 }

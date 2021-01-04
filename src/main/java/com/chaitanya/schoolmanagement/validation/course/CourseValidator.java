@@ -23,4 +23,8 @@ public class CourseValidator extends ValidationSupport implements Validator<Cour
         return Optional.empty();
     }
 
+    @Override
+    public Optional<ValidationError> validateUpdateEntity(Course course) {
+        return Optional.empty();
+    }
 }

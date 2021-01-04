@@ -5,6 +5,8 @@ import com.chaitanya.schoolmanagement.model.course.Course;
 import com.chaitanya.schoolmanagement.service.admin.AdminService;
 import com.chaitanya.schoolmanagement.service.course.CourseService;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.*;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
@@ -15,6 +17,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -70,7 +73,19 @@ public class DatabaseLoader implements CommandLineRunner {
         }
     }
 
-    public BatchStatus load() throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
+    public String load() throws Exception {
+        Logger logger = LoggerFactory.getLogger(this.getClass());
+        try {
+            JobParameters jobParameters = new JobParametersBuilder().addLong("time", System.currentTimeMillis())
+                    .toJobParameters();
+            jobLauncher.run(job, jobParameters);
+        } catch (Exception e) {
+            logger.info(e.getMessage());
+        }
+        return "Done! Check Console Window for more details";
+    }
+
+    /*public BatchStatus load() throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
         log.info("*************** running load method og spring batch from database loader ***********************");
         Map<String, JobParameter> maps = new HashMap<>();
         maps.put("time", new JobParameter(System.currentTimeMillis()));
@@ -82,6 +97,6 @@ public class DatabaseLoader implements CommandLineRunner {
             System.out.println("...");
         }
         return jobExecution.getStatus();
-    }
+    }*/
 
 }

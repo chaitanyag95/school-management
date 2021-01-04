@@ -6,6 +6,7 @@ import com.chaitanya.schoolmanagement.payload.TeacherLoginDto;
 import com.chaitanya.schoolmanagement.util.annotation.TransactionalReadOnly;
 import com.chaitanya.schoolmanagement.util.annotation.TransactionalWrite;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface TeacherService {
@@ -31,6 +32,11 @@ public interface TeacherService {
     @TransactionalReadOnly
     Teacher findTeacherByEmail(String email);
 
-
     boolean isTeacherExistByEmail(String email);
+
+    @TransactionalReadOnly
+    void downloadCsvFile() throws IOException;
+
+    @TransactionalReadOnly
+    void saveAsExcelFile() throws IOException;
 }

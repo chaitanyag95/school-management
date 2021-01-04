@@ -28,7 +28,9 @@ dependencies {
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '1.2.0.RELEASE'
     compile group: 'org.springframework.security', name: 'spring-security-crypto', version: '5.4.1'
     compile group: 'org.springframework.batch', name: 'spring-batch-core', version: '3.0.7.RELEASE'
-
+    compile group: 'net.sf.supercsv', name: 'super-csv', version: '2.4.0'
+    compile "org.apache.poi:poi:3.17"
+    compile "org.apache.poi:poi-ooxml:3.17"
 
 
 

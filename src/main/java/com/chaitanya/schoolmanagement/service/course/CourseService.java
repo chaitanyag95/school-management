@@ -20,4 +20,7 @@ public interface CourseService {
 
     @TransactionalReadOnly
     Boolean courseExistByName(String courseName);
+
+    @TransactionalReadOnly
+    Course getCourseByName(String courseName);
 }

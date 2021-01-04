@@ -1,6 +1,7 @@
 package com.chaitanya.schoolmanagement.validation.teacher;
 
 
+import com.chaitanya.schoolmanagement.model.student.Student;
 import com.chaitanya.schoolmanagement.model.teacher.Teacher;
 import com.chaitanya.schoolmanagement.service.teacher.TeacherService;
 import com.chaitanya.schoolmanagement.validation.ValidationError;
@@ -33,5 +34,16 @@ public class TeacherValidator extends ValidationSupport implements Validator<Tea
         }
         return Optional.empty();
     }
+
+    @Override
+    public Optional<ValidationError> validateUpdateEntity(Teacher teacher) {
+        if (isNullOrEmptyString(teacher.getFullName()) ||
+                isNullOrEmptyString(teacher.getPhoneNumber()) ||
+                isNullOrEmptyString(teacher.getEmail())) {
+            return Optional.of(new ValidationError(REQUIRED_DATA_NOT_FILLED_OR_BAD_DATA));
+        }
+        return Optional.empty();
+    }
+
 
 }

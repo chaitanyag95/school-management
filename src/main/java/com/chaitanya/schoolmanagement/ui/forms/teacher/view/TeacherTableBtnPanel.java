@@ -14,6 +14,8 @@ public class TeacherTableBtnPanel extends JPanel {
     private JButton addBtn;
     private JButton removeBtn;
     private JButton editBtn;
+    private JButton saveBtn;
+
 
     @PostConstruct
     private void preparePanel() {
@@ -29,6 +31,9 @@ public class TeacherTableBtnPanel extends JPanel {
 
         removeBtn = new JButton(ConstMessagesEN.Labels.REMOVE_BTN);
         add(removeBtn);
+
+        saveBtn = new JButton(ConstMessagesEN.Labels.SAVE);
+        add(saveBtn);
     }
 
 }

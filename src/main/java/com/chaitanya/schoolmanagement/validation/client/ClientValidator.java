@@ -34,4 +34,15 @@ public class ClientValidator extends ValidationSupport implements Validator<Stud
         return Optional.empty();
     }
 
+    @Override
+    public Optional<ValidationError> validateUpdateEntity(Student student) {
+        if (isNullOrEmptyString(student.getFullName()) ||
+                isNullOrEmptyString(student.getPhoneNumber()) ||
+                isNullOrEmptyString(student.getEmail())) {
+            return Optional.of(new ValidationError(REQUIRED_DATA_NOT_FILLED_OR_BAD_DATA));
+        }
+        return Optional.empty();
+    }
+
+
 }

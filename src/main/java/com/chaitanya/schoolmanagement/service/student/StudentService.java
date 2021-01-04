@@ -5,6 +5,8 @@ import com.chaitanya.schoolmanagement.model.student.Student;
 import com.chaitanya.schoolmanagement.util.annotation.TransactionalReadOnly;
 import com.chaitanya.schoolmanagement.util.annotation.TransactionalWrite;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
 public interface StudentService {
@@ -33,5 +35,9 @@ public interface StudentService {
     @TransactionalWrite
     void saveStudentsByBatch(List<Student> students);
 
+    @TransactionalReadOnly
+    void downloadCsvFile() throws IOException;
 
+    @TransactionalReadOnly
+    void saveAsExcelFile() throws IOException;
 }

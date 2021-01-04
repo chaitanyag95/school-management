@@ -5,6 +5,8 @@ import com.chaitanya.schoolmanagement.model.teacher.Teacher;
 import com.chaitanya.schoolmanagement.service.course.CourseService;
 import com.chaitanya.schoolmanagement.service.teacher.TeacherService;
 import com.chaitanya.schoolmanagement.ui.forms.student.model.CourseComboBoxModel;
+import com.chaitanya.schoolmanagement.ui.forms.student.view.modal.DownloadDataFrame;
+import com.chaitanya.schoolmanagement.ui.forms.student.view.modal.DownloadFrameBtnPanel;
 import com.chaitanya.schoolmanagement.ui.forms.teacher.model.TeacherTableModel;
 import com.chaitanya.schoolmanagement.ui.forms.teacher.view.TeacherFrame;
 import com.chaitanya.schoolmanagement.ui.forms.teacher.view.TeacherTableBtnPanel;
@@ -21,6 +23,7 @@ import org.springframework.stereotype.Controller;
 
 import javax.annotation.PostConstruct;
 import javax.swing.*;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,6 +40,7 @@ public class TeacherController extends AbstractFrameController {
     private final CourseComboBoxModel courseComboBoxModel;
     private final UpdateTeacherFrame updateTeacherFrame;
     private final UpdateTeacherFormPanel updateTeacherFormPanel;
+    private final DownloadDataFrame downloadDataFrame;
 
 
     @PostConstruct
@@ -44,13 +48,47 @@ public class TeacherController extends AbstractFrameController {
         TeacherTableBtnPanel tableBtnPanel = teacherFrame.getTeacherTableBtnPanel();
         TeacherFormBtnPanel formBtnPanel = addTeacherFrame.getTeacherFormBtnPanel();
         UpdateTeacherFormBtnPanel updateTeacherFormBtnPanel = updateTeacherFrame.getFormBtnPanel();
+        DownloadFrameBtnPanel downloadFrameBtnPanel = downloadDataFrame.getDownloadFrameBtnPanel();
         registerAction(tableBtnPanel.getRemoveBtn(), (e) -> removeClient());
         registerAction(formBtnPanel.getSaveBtn(), (e) -> saveClient());
         registerAction(tableBtnPanel.getAddBtn(), (e) -> showAddTeacherModal());
+        registerAction(tableBtnPanel.getSaveBtn(), (e) -> showDownloadModal());
         registerAction(formBtnPanel.getCancelBtn(), (e) -> closeModalWindow());
         registerAction(tableBtnPanel.getEditBtn(), (e) -> updateTeacher());
-        registerAction(updateTeacherFormBtnPanel.getSaveBtn(), (e) -> updateStudentDetails());
+        registerAction(updateTeacherFormBtnPanel.getSaveBtn(), (e) -> updateTeacherDetails());
         registerAction(updateTeacherFormBtnPanel.getCancelBtn(), (e) -> closeUpdateModalWindow());
+        registerAction(downloadFrameBtnPanel.getSaveAsCsvBtn(), (e) -> {
+            try {
+                saveAsCsvFile();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        });
+        registerAction(downloadFrameBtnPanel.getSaveAsExcelBtn(), (e) -> {
+            try {
+                saveAsExcelFile();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        });
+    }
+
+    private void showDownloadModal() {
+        downloadDataFrame.setVisible(true);
+    }
+
+    private void saveAsExcelFile() throws IOException {
+        teacherService.saveAsExcelFile();
+        closeDownloadModalWindow();
+    }
+
+    private void saveAsCsvFile() throws IOException {
+        teacherService.downloadCsvFile();
+        closeDownloadModalWindow();
+    }
+
+    private void closeDownloadModalWindow() {
+        downloadDataFrame.dispose();
     }
 
     @Override
@@ -104,18 +142,18 @@ public class TeacherController extends AbstractFrameController {
         }
     }
 
-    private void updateStudentDetails() {
+    private void updateTeacherDetails() {
         log.info("********** updating existing teacher record ***********");
         UpdateTeacherFormPanel updateTeacherFormPanel = updateTeacherFrame.getFormPanel();
         Teacher teacher = updateTeacherFormPanel.getTeacherFromUpdateTeacherForm();
-        Optional<ValidationError> errors = teacherValidator.validate(teacher);
+        Optional<ValidationError> errors = teacherValidator.validateUpdateEntity(teacher);
         if (errors.isPresent()) {
             ValidationError validationError = errors.get();
             Notifications.showFormValidationAlert(validationError.getMessage());
         } else {
             teacherService.updateTeacherDetails(teacher);
             teacherTableModel.addEntity(teacher);
-            closeModalWindow();
+            closeUpdateModalWindow();
         }
     }
 

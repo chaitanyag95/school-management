@@ -30,4 +30,9 @@ public class StudentLoginValidator extends ValidationSupport implements Validato
         }
         return Optional.empty();
     }
+
+    @Override
+    public Optional<ValidationError> validateUpdateEntity(LoginDto loginDto) {
+        return Optional.empty();
+    }
 }

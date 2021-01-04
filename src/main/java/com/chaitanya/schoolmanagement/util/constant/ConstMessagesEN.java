@@ -35,14 +35,15 @@ public interface ConstMessagesEN {
         String LOGIN = "Login";
         String STUDENTS = "Students";
         String WELCOME_STUDENT = "Welcome";
-        String OK = "Ok";
+        String SAVE = "Save";
         String UPDATE_STUDENT = "Update Details";
         String ADDRESSES = "Addresses";
         String COURSES = "Courses";
         String TEACHERS = "Teachers";
         String ADMIN = "Admin";
         String ADD_BTN = "Add";
-        String LOGIN_BTN = "Login";
+        String SaveAsCSV = "Save As Csv";
+        String SaveAsExcel = "Save As Exel";
         String UPDATE_BTN = "Update";
         String CANCEL_BTN = "Cancel";
         String REMOVE_BTN = "Remove";
@@ -58,7 +59,7 @@ public interface ConstMessagesEN {
     }
 
     interface ValidationMessages {
-        String REQUIRED_DATA_NOT_FILLED_OR_BAD_DATA = "Not all required fields have been filled or filled data is incorrect";
+        String REQUIRED_DATA_NOT_FILLED_OR_BAD_DATA = "All Fields are required";
         String USER_ALREADY_EXIST = "User with this email already exist";
         String INVALID_CREDENTIALS = "Wrong Credential! Please try again !!!! ";
     }
