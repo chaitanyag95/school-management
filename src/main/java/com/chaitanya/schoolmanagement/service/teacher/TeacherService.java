@@ -39,4 +39,6 @@ public interface TeacherService {
 
     @TransactionalReadOnly
     void saveAsExcelFile() throws IOException;
+
+    Teacher getTeacherByEmail(String email);
 }

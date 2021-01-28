@@ -18,6 +18,7 @@ public interface ConstMessagesEN {
         String STUDENT_LOGIN_MODAL = "Student Login";
         String TEACHER_LOGIN_MODAL = "Teacher Login";
         String WELCOME_STUDENT_MODAL = "Welcome Student";
+        String TEACHER_DASHBOARD = "Welcome Teacher";
     }
 
     ;
@@ -37,7 +38,6 @@ public interface ConstMessagesEN {
         String WELCOME_STUDENT = "Welcome";
         String SAVE = "Save";
         String UPDATE_STUDENT = "Update Details";
-        String ADDRESSES = "Addresses";
         String COURSES = "Courses";
         String TEACHERS = "Teachers";
         String ADMIN = "Admin";
@@ -56,6 +56,8 @@ public interface ConstMessagesEN {
         String EDIT_TEACHER = "Edit Teacher";
         String COURSE_NAME = "Course Name";
         String STUDENT = "Student";
+        String ADD_QUESTION = "Add Question";
+        String ADD_EXAM = "Create Exam";
     }
 
     interface ValidationMessages {

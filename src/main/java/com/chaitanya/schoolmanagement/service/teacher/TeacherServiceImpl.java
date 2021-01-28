@@ -204,4 +204,9 @@ class TeacherServiceImpl implements TeacherService {
 
 
     }
+
+    @Override
+    public Teacher getTeacherByEmail(String email) {
+        return teacherRepository.findTeacherByEmail(email);
+    }
 }

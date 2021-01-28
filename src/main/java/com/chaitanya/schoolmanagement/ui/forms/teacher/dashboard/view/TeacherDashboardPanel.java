@@ -1,6 +1,6 @@
-package com.chaitanya.schoolmanagement.ui.forms.student.welcome.view;
+package com.chaitanya.schoolmanagement.ui.forms.teacher.dashboard.view;
 
-import com.chaitanya.schoolmanagement.model.student.Student;
+import com.chaitanya.schoolmanagement.model.teacher.Teacher;
 import com.chaitanya.schoolmanagement.util.border.Borders;
 import com.chaitanya.schoolmanagement.util.constant.ConstMessagesEN;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +12,7 @@ import java.awt.*;
 
 @Slf4j
 @Component
-public class WelcomeStudentPanel extends JPanel {
+public class TeacherDashboardPanel extends JPanel {
     private static final int LAYOUT_ROWS = 6;
     private static final int LAYOUT_COLS = 5;
     private static final int HORIZONTAL_GAP = 30;
@@ -60,11 +60,11 @@ public class WelcomeStudentPanel extends JPanel {
         add(courseTF);
     }
 
-    public void setStudentForm(Student student) {
-        log.info("******** setting  student for welcome frame **********");
-        nameTF.setText(student.getFullName());
-        courseTF.setText(student.getCourse().getName());
-        phoneNumberTF.setText(student.getPhoneNumber());
-        emailTF.setText(student.getEmail());
+    public void setTeacherForm(Teacher teacher) {
+        log.info("******** setting  teacher for dashboard frame **********");
+        nameTF.setText(teacher.getFullName());
+        courseTF.setText(teacher.getCourse().getName());
+        phoneNumberTF.setText(teacher.getPhoneNumber());
+        emailTF.setText(teacher.getEmail());
     }
 }
