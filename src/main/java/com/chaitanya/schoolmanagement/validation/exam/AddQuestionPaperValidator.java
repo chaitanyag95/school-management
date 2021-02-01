@@ -10,8 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
-import static com.chaitanya.schoolmanagement.util.constant.ConstMessagesEN.ValidationMessages.REQUIRED_DATA_NOT_FILLED_OR_BAD_DATA;
-import static com.chaitanya.schoolmanagement.util.constant.ConstMessagesEN.ValidationMessages.USER_ALREADY_EXIST;
+import static com.chaitanya.schoolmanagement.util.constant.ConstMessagesEN.ValidationMessages.*;
 
 @Component
 public class AddQuestionPaperValidator extends ValidationSupport implements Validator<AddQuestionPaperDto> {
@@ -24,6 +23,9 @@ public class AddQuestionPaperValidator extends ValidationSupport implements Vali
         if (isNullOrEmptyString(addQuestionPaperDto.getPaperTitle()) ||
                 isNullOrEmptyString(addQuestionPaperDto.getPaperDsc())) {
             return Optional.of(new ValidationError(REQUIRED_DATA_NOT_FILLED_OR_BAD_DATA));
+        }
+        if (questionPaperService.isQuestionPaperExistByPaperCode(addQuestionPaperDto)) {
+            return Optional.of(new ValidationError(QUESTION_PAPER_ALREADY_EXIST));
         }
         return Optional.empty();
     }

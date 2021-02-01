@@ -27,6 +27,7 @@ public class QuestionPaper {
     private String duration;
     private Date dateCreated = new Date();
     private Date lastUpdated;
+    private String paperCode;
     @OneToMany
     @JoinColumn(name = "questionId")
     private List<Question> questions;

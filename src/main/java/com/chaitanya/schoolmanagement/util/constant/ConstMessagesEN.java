@@ -29,12 +29,14 @@ public interface ConstMessagesEN {
         String NON_ROW_SELECTED = "Non row has been selected";
         String INFORMATION_TITLE = "Information";
         String DELETE_ROW_ERROR = "Could not delete a row. Check if there are any connections between tables.";
+        String DELETED_QUESTION_PAPER = " Question Paper Successfully Deleted";
     }
 
     interface Labels {
         String MAIN_MENU = "Hotel reservations";
         String LOGIN = "Login";
         String STUDENTS = "Students";
+        String MANAGE_EXAMS = "Manage Exams";
         String WELCOME_STUDENT = "Welcome";
         String SAVE = "Save";
         String UPDATE_STUDENT = "Update Details";
@@ -51,6 +53,7 @@ public interface ConstMessagesEN {
         String PASSWORD = "Password";
         String COURSE = "Course";
         String EDIT = "Edit Student";
+        String EDIT_QUESTION_PAPER = "Edit Question Paper";
         String PHONE_NUMBER = "Phone number";
         String EMAIL = "E-mail";
         String EDIT_TEACHER = "Edit Teacher";
@@ -58,11 +61,17 @@ public interface ConstMessagesEN {
         String STUDENT = "Student";
         String ADD_QUESTION = "Add Question";
         String ADD_EXAM = "Create Exam";
+        String PAPER_CODE = "Paper Code";
+        String PAPER_TITLE = "Paper Title";
+        String EXAMS = "Exams";
+        String EXAM_DASHBOARD = "Exam Dashboard";
+
     }
 
     interface ValidationMessages {
         String REQUIRED_DATA_NOT_FILLED_OR_BAD_DATA = "All Fields are required";
         String USER_ALREADY_EXIST = "User with this email already exist";
         String INVALID_CREDENTIALS = "Wrong Credential! Please try again !!!! ";
+        String QUESTION_PAPER_ALREADY_EXIST = "Question paper with entered paper code already exist";
     }
 }

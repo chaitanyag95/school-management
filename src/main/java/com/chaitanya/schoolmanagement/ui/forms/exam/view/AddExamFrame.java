@@ -10,6 +10,13 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.swing.*;
+import javax.swing.text.DateFormatter;
+import javax.swing.text.DefaultFormatterFactory;
+import java.awt.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 @Component
 @Getter
@@ -23,11 +30,15 @@ public class AddExamFrame extends JFrame {
     private JLabel jLabel1;
     private JLabel paperCourseLbl;
     private JLabel paperDscLbl;
-    private JTextField paperDscTF;
+    private JTextArea paperDscTF;
+    private JTextField paperCodeTF;
     private JLabel paperDurationLbl;
     private JLabel paperTitleLbl1;
+    private JLabel paperCodeLbl;
     private JTextField paperTitleTF;
     private JButton saveBtn;
+    private JScrollPane jScrollPane1;
+    private JFormattedTextField jFormattedTextField;
     // End of variables declaration
     private final CourseComboBoxModel courseComboBoxModel;
     private static final int DEFAULT_WIDTH = 750;
@@ -58,48 +69,70 @@ public class AddExamFrame extends JFrame {
 
         createQuestionPaperLbl = new JLabel();
         jLabel1 = new JLabel();
+        paperCodeLbl = new JLabel();
         paperDscLbl = new JLabel();
         paperTitleTF = new JTextField();
+        paperCodeTF = new JTextField();
         paperTitleLbl1 = new JLabel();
-        paperDscTF = new JTextField();
+        paperDscTF = new JTextArea();
         paperCourseLbl = new JLabel();
         durationCB = new JComboBox<>();
         paperDurationLbl = new JLabel();
         courseCB = new JComboBox<>(courseComboBoxModel);
         saveBtn = new JButton();
         backBtn = new JButton();
+        jScrollPane1 = new JScrollPane();
+        jFormattedTextField = new JFormattedTextField();
+
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        createQuestionPaperLbl.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        paperCodeLbl.setFont(new Font("Ubuntu", 1, 15)); // NOI18N
+        paperCodeLbl.setText("Paper Code");
+
+        createQuestionPaperLbl.setFont(new Font("Ubuntu", 1, 15)); // NOI18N
         createQuestionPaperLbl.setText("Create Question Paper");
 
-        paperDscLbl.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        paperDscLbl.setFont(new Font("Ubuntu", 1, 15)); // NOI18N
         paperDscLbl.setText("Description");
 
         paperTitleTF.setText("Title of Exam");
 
 
-        paperTitleLbl1.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        paperTitleLbl1.setFont(new Font("Ubuntu", 1, 15)); // NOI18N
         paperTitleLbl1.setText("Title");
 
-        paperDscTF.setText("Description");
+        paperDscTF.setColumns(20);
+        paperDscTF.setRows(5);
+        jScrollPane1.setViewportView(paperDscTF);
 
 
-        paperCourseLbl.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        paperCourseLbl.setFont(new Font("Ubuntu", 1, 15)); // NOI18N
         paperCourseLbl.setText("Course");
 
         durationCB.setModel(new DefaultComboBoxModel<>(new String[]{"1", "2", "3"}));
         durationCB.setSelectedItem(1);
 
 
-        paperDurationLbl.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        paperDurationLbl.setFont(new Font("Ubuntu", 1, 15)); // NOI18N
         paperDurationLbl.setText("Duration");
 
 
         saveBtn.setText("Save");
 
         backBtn.setText("Back");
+
+        jFormattedTextField.setFormatterFactory(new DefaultFormatterFactory(new DateFormatter(new SimpleDateFormat(
+                "H'h' mm'm'"))));
+        jFormattedTextField.setValue(Calendar.getInstance().getTime());
+
+        jFormattedTextField.addPropertyChangeListener("value", new PropertyChangeListener() {
+
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                System.out.println(jFormattedTextField.getValue());
+            }
+        });
 
 
         GroupLayout layout = new GroupLayout(getContentPane());
@@ -112,69 +145,74 @@ public class AddExamFrame extends JFrame {
                                                 .addGap(49, 49, 49)
                                                 .addComponent(jLabel1))
                                         .addGroup(layout.createSequentialGroup()
-                                                .addGap(197, 197, 197)
-                                                .addComponent(createQuestionPaperLbl))
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addGap(35, 35, 35)
-                                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                                                        .addGroup(layout.createSequentialGroup()
-                                                                .addComponent(paperDscLbl, GroupLayout.PREFERRED_SIZE, 144, GroupLayout.PREFERRED_SIZE)
-                                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                                                        .addComponent(paperTitleTF, GroupLayout.PREFERRED_SIZE, 320, GroupLayout.PREFERRED_SIZE)
-                                                                        .addComponent(paperDscTF, GroupLayout.PREFERRED_SIZE, 320, GroupLayout.PREFERRED_SIZE)))
-                                                        .addGroup(layout.createSequentialGroup()
-                                                                .addComponent(paperCourseLbl, GroupLayout.PREFERRED_SIZE, 144, GroupLayout.PREFERRED_SIZE)
-                                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                                                .addComponent(courseCB, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                                        .addGroup(layout.createSequentialGroup()
-                                                                .addComponent(paperDurationLbl, GroupLayout.PREFERRED_SIZE, 144, GroupLayout.PREFERRED_SIZE)
-                                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                                                .addComponent(durationCB, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                                .addContainerGap(85, Short.MAX_VALUE))
+                                                .addGap(327, 327, 327)
+                                                .addComponent(createQuestionPaperLbl)))
+                                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addContainerGap(82, Short.MAX_VALUE)
+                                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                                        .addComponent(paperTitleLbl1, GroupLayout.PREFERRED_SIZE, 144, GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(paperCodeLbl))
+                                                .addGap(140, 140, 140)
+                                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                                        .addComponent(paperTitleTF, GroupLayout.PREFERRED_SIZE, 320, GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(paperCodeTF, GroupLayout.PREFERRED_SIZE, 320, GroupLayout.PREFERRED_SIZE)))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(86, 86, 86)
+                                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                                                        .addComponent(paperDurationLbl, GroupLayout.PREFERRED_SIZE, 144, GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(paperDscLbl, GroupLayout.PREFERRED_SIZE, 144, GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(paperCourseLbl, GroupLayout.PREFERRED_SIZE, 144, GroupLayout.PREFERRED_SIZE))
+                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                                                        .addComponent(jFormattedTextField, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(courseCB, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE))))
+                                .addGap(195, 195, 195))
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(117, 117, 117)
                                 .addComponent(saveBtn, GroupLayout.PREFERRED_SIZE, 92, GroupLayout.PREFERRED_SIZE)
-                                .addGap(152, 152, 152)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(backBtn, GroupLayout.PREFERRED_SIZE, 98, GroupLayout.PREFERRED_SIZE)
-                                .addGap(119, 119, 119))
-                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                        .addGap(36, 36, 36)
-                                        .addComponent(paperTitleLbl1, GroupLayout.PREFERRED_SIZE, 144, GroupLayout.PREFERRED_SIZE)
-                                        .addContainerGap(416, Short.MAX_VALUE)))
+                                .addGap(288, 288, 288))
         );
         layout.setVerticalGroup(
                 layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                                 .addGap(12, 12, 12)
                                 .addComponent(createQuestionPaperLbl)
-                                .addGap(61, 61, 61)
+                                .addGap(62, 62, 62)
                                 .addComponent(jLabel1)
-                                .addGap(7, 7, 7)
-                                .addComponent(paperTitleTF, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                        .addComponent(paperDscLbl, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(paperDscTF, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
+                                        .addComponent(paperCodeTF, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(paperCodeLbl))
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(117, 117, 117)
+                                                .addComponent(paperDscLbl, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(18, 18, 18)
+                                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(paperTitleTF, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(paperTitleLbl1, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE))
+                                                .addGap(33, 33, 33)
+                                                .addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+                                .addGap(32, 32, 32)
                                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                        .addComponent(paperCourseLbl, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(courseCB, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(courseCB, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(paperCourseLbl, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE))
+                                .addGap(32, 32, 32)
                                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                         .addComponent(paperDurationLbl, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(durationCB, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                                        .addComponent(jFormattedTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                         .addComponent(saveBtn)
                                         .addComponent(backBtn))
-                                .addGap(32, 32, 32))
-                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                        .addGap(107, 107, 107)
-                                        .addComponent(paperTitleLbl1, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
-                                        .addContainerGap(253, Short.MAX_VALUE)))
+                                .addGap(29, 29, 29))
         );
 
         pack();
@@ -187,6 +225,7 @@ public class AddExamFrame extends JFrame {
         addQuestionPaperDto.setPaperDsc(paperDscTF.getText());
         addQuestionPaperDto.setCourse((Course) courseCB.getSelectedItem());
         addQuestionPaperDto.setDuration((String) durationCB.getSelectedItem());
+        addQuestionPaperDto.setPaperCode(paperCodeTF.getText());
         log.info(" ***** paper title == " + addQuestionPaperDto.getPaperTitle());
         return addQuestionPaperDto;
 

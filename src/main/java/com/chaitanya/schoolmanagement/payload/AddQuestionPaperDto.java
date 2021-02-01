@@ -15,4 +15,5 @@ public class AddQuestionPaperDto {
     private String paperDsc;
     private Course course;
     private String duration;
+    private String paperCode;
 }

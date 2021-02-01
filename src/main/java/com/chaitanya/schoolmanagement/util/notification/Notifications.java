@@ -1,7 +1,6 @@
 package com.chaitanya.schoolmanagement.util.notification;
 
 
-
 import com.chaitanya.schoolmanagement.util.constant.ConstMessagesEN;
 
 import javax.swing.*;
@@ -20,5 +19,12 @@ public class Notifications {
                 ConstMessagesEN.Messages.DELETE_ROW_ERROR,
                 ConstMessagesEN.Messages.ALERT_TILE,
                 JOptionPane.ERROR_MESSAGE);
+    }
+
+    public static void showDeletedSuccessfulMessage() {
+        JOptionPane.showMessageDialog(null,
+                ConstMessagesEN.Messages.DELETED_QUESTION_PAPER,
+                ConstMessagesEN.Messages.ALERT_TILE,
+                JOptionPane.INFORMATION_MESSAGE);
     }
 }

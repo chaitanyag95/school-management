@@ -5,5 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface QuestionPaperRepository extends JpaRepository<QuestionPaper,String> {
+public interface QuestionPaperRepository extends JpaRepository<QuestionPaper, String> {
+    QuestionPaper findByPaperCode(String paperCode);
 }

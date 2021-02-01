@@ -9,7 +9,7 @@ import javax.swing.*;
 
 @Component
 @Getter
-public class AddQuestionBtn extends  JPanel{
+public class AddQuestionBtn extends JPanel {
     private JButton addQuestion;
 
 
@@ -19,7 +19,7 @@ public class AddQuestionBtn extends  JPanel{
     }
 
     private void initComponents() {
-        addQuestion = new JButton(ConstMessagesEN.Labels.ADD_QUESTION);
+        addQuestion = new JButton(ConstMessagesEN.Labels.EXAMS);
         add(addQuestion);
     }
 }
