@@ -214,8 +214,6 @@ public class AddExamFrame extends JFrame {
                                         .addComponent(backBtn))
                                 .addGap(29, 29, 29))
         );
-
-        pack();
     }// </editor-fold>
 
     public AddQuestionPaperDto getQuestionPaperFromForm() {

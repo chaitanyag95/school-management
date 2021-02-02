@@ -9,10 +9,10 @@ import javax.swing.*;
 
 @Component
 @Getter
-public class QuestionPaperTableBtnPanel extends JPanel {
+public class QuestionTableBtnPanel extends JPanel {
     private JButton addQuestionBtn;
     private JButton removeBtn;
-    private JButton editQuestionPaperBtn;
+    private JButton editQuestionBtn;
 
 
     @PostConstruct
@@ -24,8 +24,8 @@ public class QuestionPaperTableBtnPanel extends JPanel {
         addQuestionBtn = new JButton(ConstMessagesEN.Labels.ADD_QUESTION);
         add(addQuestionBtn);
 
-        editQuestionPaperBtn = new JButton(ConstMessagesEN.Labels.EDIT_QUESTION_PAPER);
-        add(editQuestionPaperBtn);
+        editQuestionBtn = new JButton(ConstMessagesEN.Labels.EDIT_QUESTION_PAPER);
+        add(editQuestionBtn);
 
         removeBtn = new JButton(ConstMessagesEN.Labels.REMOVE_BTN);
         add(removeBtn);

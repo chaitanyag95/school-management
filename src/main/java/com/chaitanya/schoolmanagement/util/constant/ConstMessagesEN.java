@@ -65,6 +65,9 @@ public interface ConstMessagesEN {
         String PAPER_TITLE = "Paper Title";
         String EXAMS = "Exams";
         String EXAM_DASHBOARD = "Exam Dashboard";
+        String QUESTION_DASHBOARD = "Question Dashboard";
+        String QUESTION_NO = "Question No";
+        String QUESTION = "Question";
 
     }
 

@@ -23,11 +23,15 @@ public class Question {
     @ManyToOne
     @JoinColumn(name = "courseId")
     private Course course;
+    private int questionNo;
     private String question;
     private String answerOne;
     private String answerTwo;
     private String answerThree;
     private String answerFour;
-    private String correctAnswer;
+    private int correctAnswer;
+    @ManyToOne
+    @JoinColumn(name = "questionPaperId")
+    private QuestionPaper questionPaper;
 
 }

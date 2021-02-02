@@ -11,6 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AddQuestionPaperDto {
+    private String questionPaperId;
     private String paperTitle;
     private String paperDsc;
     private Course course;
