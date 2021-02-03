@@ -3,6 +3,7 @@ package com.chaitanya.schoolmanagement.ui.forms.exam.view;
 import com.chaitanya.schoolmanagement.model.course.Course;
 import com.chaitanya.schoolmanagement.model.exam.QuestionPaper;
 import com.chaitanya.schoolmanagement.payload.AddQuestionPaperDto;
+import com.chaitanya.schoolmanagement.ui.forms.student.model.CourseComboBoxModel;
 import com.chaitanya.schoolmanagement.util.constant.ConstMessagesEN;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +22,7 @@ public class EditExamFrame extends JFrame {
     // Variables declaration - do not modify
     private JButton backBtn;
     private JLabel bgLbl;
-    private JComboBox<String> courseCB;
+    private JComboBox<Course> courseCB;
     private JButton deleteBtn;
     private JComboBox<String> durationCB;
     private JLabel editQuestionPaperLbl;
@@ -35,8 +36,14 @@ public class EditExamFrame extends JFrame {
     private JLabel paperTitleLbl;
     private JTextField paperTitleTF;
     private JButton updateBtn;
+    private JLabel hrLbl;
+    private final CourseComboBoxModel courseComboBoxModel;
     // End of variables declaration
     private String questionPaperId;
+
+    public EditExamFrame(CourseComboBoxModel courseComboBoxModel) {
+        this.courseComboBoxModel = courseComboBoxModel;
+    }
 
     /**
      * Creates new form EditQuestionPaperSchool
@@ -68,12 +75,13 @@ public class EditExamFrame extends JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         paperDscTF = new javax.swing.JTextArea();
         paperCourseLbl = new javax.swing.JLabel();
-        courseCB = new javax.swing.JComboBox<>();
+        courseCB = new JComboBox<>(courseComboBoxModel);
         paperDurationLbl = new javax.swing.JLabel();
         durationCB = new javax.swing.JComboBox<>();
         updateBtn = new javax.swing.JButton();
         deleteBtn = new javax.swing.JButton();
         backBtn = new javax.swing.JButton();
+        hrLbl = new JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -100,18 +108,21 @@ public class EditExamFrame extends JFrame {
         paperCourseLbl.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
         paperCourseLbl.setText("Course");
 
-        courseCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Item 1", "Item 2", "Item 3", "Item 4"}));
+
 
 
         paperDurationLbl.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
         paperDurationLbl.setText("Duration");
 
-        durationCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"1", "2", "3", " "}));
+        durationCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"1", "2", "3"}));
         durationCB.setSelectedItem(1);
 
 
         updateBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Webp.net-resizeimage (4).png"))); // NOI18N
         updateBtn.setText("Update");
+
+        hrLbl.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
+        hrLbl.setText("Hr");
 
 
         deleteBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Webp.net-resizeimage (2).png"))); // NOI18N
@@ -133,7 +144,9 @@ public class EditExamFrame extends JFrame {
                                                         .addGroup(layout.createSequentialGroup()
                                                                 .addComponent(paperDurationLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                                .addComponent(durationCB, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                .addComponent(durationCB, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                .addComponent(hrLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                         .addGroup(layout.createSequentialGroup()
                                                                 .addComponent(paperCourseLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -192,8 +205,8 @@ public class EditExamFrame extends JFrame {
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(paperDurationLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(durationCB, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(43, 43, 43)
+                                        .addComponent(durationCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(hrLbl)).addGap(43, 43, 43)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(updateBtn)
                                         .addComponent(deleteBtn)

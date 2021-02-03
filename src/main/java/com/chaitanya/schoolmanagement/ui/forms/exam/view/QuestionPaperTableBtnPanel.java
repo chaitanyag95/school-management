@@ -13,6 +13,7 @@ public class QuestionPaperTableBtnPanel extends JPanel {
     private JButton addQuestionBtn;
     private JButton removeBtn;
     private JButton editQuestionPaperBtn;
+    private JButton backBtn;
 
 
     @PostConstruct
@@ -30,5 +31,7 @@ public class QuestionPaperTableBtnPanel extends JPanel {
         removeBtn = new JButton(ConstMessagesEN.Labels.REMOVE_BTN);
         add(removeBtn);
 
+        backBtn = new JButton("Back");
+        add(backBtn);
     }
 }

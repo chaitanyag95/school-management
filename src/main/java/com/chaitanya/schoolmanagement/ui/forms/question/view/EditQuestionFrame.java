@@ -6,7 +6,6 @@ import com.chaitanya.schoolmanagement.service.exam.QuestionPaperService;
 import com.chaitanya.schoolmanagement.util.constant.ConstMessagesEN;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,17 +18,15 @@ import java.util.Optional;
 @Component
 @Getter
 @Slf4j
-public class AddQuestionFrame extends JFrame {
-
+public class EditQuestionFrame extends JFrame {
     private JTextField answer_four;
     private JTextField answer_one;
     private JTextField answer_three;
     private JTextField answer_two;
-    private JTextField correctAnswerTF;
     private JButton saveBtn;
     private JButton backBtn;
     private JComboBox<String> correctAnsCB;
-    private JLabel addQuestionTitle;
+    private JLabel editQuestionTitle;
     private JLabel questionIdLbl;
     private JLabel ansOneLbl;
     private JLabel ansTwoLbl;
@@ -42,6 +39,7 @@ public class AddQuestionFrame extends JFrame {
     private JTextField ques_id;
     private QuestionPaper questionPaper;
     private String questionPaperId;
+    private String questionId;
     @Autowired
     private QuestionPaperService questionPaperService;
 
@@ -67,7 +65,7 @@ public class AddQuestionFrame extends JFrame {
 
     private void initComponents() {
 
-        addQuestionTitle = new JLabel();
+        editQuestionTitle = new JLabel();
         questionIdLbl = new JLabel();
         ques_id = new JTextField();
         jScrollPane1 = new JScrollPane();
@@ -87,7 +85,7 @@ public class AddQuestionFrame extends JFrame {
         questionNoSpinner = new JSpinner();
 
 
-        addQuestionTitle.setText("ADD QUESTIONS");
+        editQuestionTitle.setText("Edit QUESTION");
 
         questionIdLbl.setText("Question_ID -");
 
@@ -167,7 +165,7 @@ public class AddQuestionFrame extends JFrame {
                                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                         .addGroup(layout.createSequentialGroup()
                                                 .addGap(252, 252, 252)
-                                                .addComponent(addQuestionTitle)
+                                                .addComponent(editQuestionTitle)
                                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                 .addComponent(backBtn))
                                         .addGroup(layout.createSequentialGroup()
@@ -211,7 +209,7 @@ public class AddQuestionFrame extends JFrame {
                         .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                        .addComponent(addQuestionTitle)
+                                        .addComponent(editQuestionTitle)
                                         .addComponent(backBtn))
                                 .addGap(25, 25, 25)
                                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
@@ -245,20 +243,6 @@ public class AddQuestionFrame extends JFrame {
     }
 
 
-    private void addAnswersInCorrectAnsCB(java.awt.event.ActionEvent evt) {
-        if ((correctAnsCB.getSelectedItem()) == null) {
-            String ans_one = answer_one.getText().trim();
-            String ans_two = answer_two.getText().trim();
-            String ans_three = answer_three.getText().trim();
-            String ans_four = answer_four.getText().trim();
-            correctAnsCB.addItem(ans_one);
-            correctAnsCB.addItem(ans_two);
-            correctAnsCB.addItem(ans_three);
-            correctAnsCB.addItem(ans_four);
-        }                      // TODO add your handling code here:
-    }
-
-
     public Question getQuestionFromForm() {
         Question question = new Question();
         question.setQuestion(ques.getText());
@@ -274,18 +258,22 @@ public class AddQuestionFrame extends JFrame {
 
     }
 
-    public void setQuestionPaperInAddQuestionFrame(QuestionPaper questionPaper) {
+    public void setQuestionPaperInEditQuestionFrame(QuestionPaper questionPaper) {
         questionPaperId = questionPaper.getId();
         questionPaper = questionPaper;
         log.info(" ******** question paper ->   " + questionPaper.getPaperCode() + " ->  " + questionPaper.getPaperTitle() + " ******** in AddQuestionFrame Form *********  -> " + questionPaperId);
     }
 
-    public void clearForm() {
-        ques.setText(Strings.EMPTY);
-        answer_four.setText(Strings.EMPTY);
-        answer_three.setText(Strings.EMPTY);
-        answer_two.setText(Strings.EMPTY);
-        answer_one.setText(Strings.EMPTY);
+    public void setEditQuestionForm(Question question) {
+        log.info("******** setting update question  ->  method called from question controller - > loadQuestion() **********");
+        ques.setText(question.getQuestion());
+        questionNoSpinner.setValue(question.getQuestionNo());
+        answer_four.setText(question.getAnswerFour());
+        answer_three.setText(question.getAnswerThree());
+        answer_two.setText(question.getAnswerTwo());
+        answer_one.setText(question.getAnswerOne());
+        correctAnsCB.getModel().setSelectedItem(question.getCorrectAnswer());
+        questionPaperId = question.getQuestionPaper().getId();
+        questionId  = question.getId();
     }
-
 }

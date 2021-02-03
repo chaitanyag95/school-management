@@ -36,6 +36,7 @@ public interface ConstMessagesEN {
         String MAIN_MENU = "Hotel reservations";
         String LOGIN = "Login";
         String STUDENTS = "Students";
+        String QUESTIONS_LIST = "Question List";
         String MANAGE_EXAMS = "Manage Exams";
         String WELCOME_STUDENT = "Welcome";
         String SAVE = "Save";

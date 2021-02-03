@@ -8,11 +8,16 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 @Slf4j
 public class QuestionService {
     @Autowired
     private QuestionRepository questionRepository;
+    @Autowired
+    private QuestionPaperService questionPaperService;
 
     public Question saveQuestion(Question question1) {
         log.info("********** Saving Question Record ***********");
@@ -28,5 +33,15 @@ public class QuestionService {
         questionRepository.save(question);
         log.info(" ******* question successfully paper added ******** " + question.getId());
         return question;
+    }
+
+    public List<Question> findAllQuestionsByQuestionPaperId(String questionPaperId) {
+        Optional<QuestionPaper> questionPaper = questionPaperService.getQuestionPaperById(questionPaperId);
+        List<Question> questionList = questionRepository.findAllByQuestionPaperOrderByQuestionNoAsc(questionPaper.get());
+        return questionList;
+    }
+
+    public void remove(Question question) {
+        questionRepository.delete(question);
     }
 }

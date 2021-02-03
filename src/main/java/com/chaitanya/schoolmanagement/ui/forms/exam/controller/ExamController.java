@@ -44,13 +44,13 @@ public class ExamController extends AbstractFrameController {
     private final AddQuestionFrame addQuestionFrame;
 
 
-
     @PostConstruct
     private void prepareListeners() {
         QuestionPaperTableBtnPanel questionPaperTableBtnPanel = examFrame.getTableBtnPanel();
         registerAction(questionPaperTableBtnPanel.getAddQuestionBtn(), (e) -> showAddQuestionDashboard());
         registerAction(questionPaperTableBtnPanel.getRemoveBtn(), (e) -> deleteQuestionPaper());
         registerAction(questionPaperTableBtnPanel.getEditQuestionPaperBtn(), (e) -> showEditQuestionPaperWindow());
+        registerAction(questionPaperTableBtnPanel.getBackBtn(), (e) -> backToExamDashboardFromPaperTable());
         registerAction(editExamFrame.getUpdateBtn(), (e) -> updateQuestionPaper());
         registerAction(editExamFrame.getBackBtn(), (e) -> backToViewExam());
         registerAction(addExamFrame.getBackBtn(), (e) -> backToExamDashboard());
@@ -62,9 +62,12 @@ public class ExamController extends AbstractFrameController {
         registerAction(questionDashboardFrame.getAddQuestionBtn(), (e) -> showAddQuestionInPaper());
     }
 
+    private void backToExamDashboardFromPaperTable() {
+        examFrame.setVisible(false);
+        examDashboardFrame.setVisible(true);
+    }
+
     private void showAddQuestionInPaper() {
-        String id = addQuestionFrame.getQuestionPaperId();
-        System.out.println(id);
         questionDashboardFrame.setVisible(false);
         addQuestionFrame.setVisible(true);
     }
@@ -137,6 +140,7 @@ public class ExamController extends AbstractFrameController {
 
     private void showUpdateQuestionWindow(QuestionPaper questionPaper) {
         loadQuestionPaper(questionPaper);
+        loadCourses();
         editExamFrame.setVisible(true);
     }
 
@@ -184,6 +188,7 @@ public class ExamController extends AbstractFrameController {
         } else {
             QuestionPaper questionPaper = questionPaperService.save(addQuestionPaperDto);
             questionPaperTableModel.addEntity(questionPaper);
+            addExamFrame.clearAddExamForm();
             addExamFrame.setVisible(false);
             examFrame.setVisible(true);
         }

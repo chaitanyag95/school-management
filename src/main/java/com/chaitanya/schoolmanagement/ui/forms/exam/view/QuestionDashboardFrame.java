@@ -23,6 +23,7 @@ public class QuestionDashboardFrame extends JFrame {
 
     // End of variables declaration
     private QuestionPaper questionPaper;
+    private String questionPaperId;
 
     @PostConstruct
     private void preparePanel() {
@@ -108,6 +109,7 @@ public class QuestionDashboardFrame extends JFrame {
     }
 
     public void setQuestionPaper(QuestionPaper questionPaper) {
+        questionPaperId = questionPaper.getId();
         questionPaper = questionPaper;
         log.info(" ******** question paper ->   " + questionPaper.getPaperCode() + " ->  " + questionPaper.getPaperTitle());
     }
