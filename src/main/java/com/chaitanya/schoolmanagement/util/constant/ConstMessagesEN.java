@@ -70,6 +70,8 @@ public interface ConstMessagesEN {
         String QUESTION_NO = "Question No";
         String QUESTION = "Question";
 
+        String VIEW = "View";
+        String VIEW_QUESTION = "View Question";
     }
 
     interface ValidationMessages {

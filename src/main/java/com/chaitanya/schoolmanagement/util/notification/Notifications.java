@@ -27,4 +27,11 @@ public class Notifications {
                 ConstMessagesEN.Messages.ALERT_TILE,
                 JOptionPane.INFORMATION_MESSAGE);
     }
+
+    public static void show() {
+        JOptionPane.showMessageDialog(null,
+                ConstMessagesEN.Messages.DELETED_QUESTION_PAPER,
+                ConstMessagesEN.Messages.ALERT_TILE,
+                JOptionPane.INFORMATION_MESSAGE);
+    }
 }

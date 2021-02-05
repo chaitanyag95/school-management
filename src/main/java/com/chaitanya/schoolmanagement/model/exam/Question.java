@@ -29,7 +29,7 @@ public class Question {
     private String answerTwo;
     private String answerThree;
     private String answerFour;
-    private int correctAnswer;
+    private String correctAnswer;
     @ManyToOne
     @JoinColumn(name = "questionPaperId")
     private QuestionPaper questionPaper;

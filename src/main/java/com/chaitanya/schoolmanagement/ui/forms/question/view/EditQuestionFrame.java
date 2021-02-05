@@ -251,7 +251,7 @@ public class EditQuestionFrame extends JFrame {
         question.setAnswerTwo(answer_two.getText());
         question.setAnswerThree(answer_three.getText());
         question.setAnswerFour(answer_four.getText());
-        question.setCorrectAnswer(correctAnsCB.getSelectedIndex());
+        question.setCorrectAnswer((String) correctAnsCB.getSelectedItem());
         Optional<QuestionPaper> questionPaper = questionPaperService.getQuestionPaperById(questionPaperId);
         question.setQuestionPaper(questionPaper.get());
         return question;
@@ -274,6 +274,6 @@ public class EditQuestionFrame extends JFrame {
         answer_one.setText(question.getAnswerOne());
         correctAnsCB.getModel().setSelectedItem(question.getCorrectAnswer());
         questionPaperId = question.getQuestionPaper().getId();
-        questionId  = question.getId();
+        questionId = question.getId();
     }
 }

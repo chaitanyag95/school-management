@@ -3,6 +3,7 @@ package com.chaitanya.schoolmanagement.service.exam;
 import com.chaitanya.schoolmanagement.model.exam.Question;
 import com.chaitanya.schoolmanagement.model.exam.QuestionPaper;
 import com.chaitanya.schoolmanagement.payload.AddQuestionPaperDto;
+import com.chaitanya.schoolmanagement.payload.NextQuestionPayload;
 import com.chaitanya.schoolmanagement.repository.QuestionRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,5 +44,19 @@ public class QuestionService {
 
     public void remove(Question question) {
         questionRepository.delete(question);
+    }
+
+    public Question getNextQuestion(NextQuestionPayload nextQuestionPayload) {
+        int questionNo = nextQuestionPayload.getQuestionNo() + 1;
+        Optional<QuestionPaper> questionPaper = questionPaperService.getQuestionPaperById(nextQuestionPayload.getQuestionPaperId());
+        Question question = questionRepository.findByQuestionNoAndQuestionPaper(questionNo, questionPaper.get());
+        return question;
+    }
+
+    public Question getPreviousQuestion(NextQuestionPayload nextQuestionPayload) {
+        int questionNo = nextQuestionPayload.getQuestionNo() - 1;
+        Optional<QuestionPaper> questionPaper = questionPaperService.getQuestionPaperById(nextQuestionPayload.getQuestionPaperId());
+        Question question = questionRepository.findByQuestionNoAndQuestionPaper(questionNo, questionPaper.get());
+        return question;
     }
 }

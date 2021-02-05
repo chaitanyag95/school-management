@@ -1,4 +1,5 @@
-package com.chaitanya.schoolmanagement.ui.forms.student.welcome.view;
+package com.chaitanya.schoolmanagement.ui.forms.student.exam.view;
+
 
 import com.chaitanya.schoolmanagement.util.constant.ConstMessagesEN;
 import lombok.AllArgsConstructor;
@@ -12,12 +13,12 @@ import java.awt.*;
 @Component
 @AllArgsConstructor
 @Getter
-public class WelcomeStudentFrame extends JDialog {
-    private final WelcomeStudentPanel welcomeStudentPanel;
-    private final StudentDashboardBtnPanel studentDashboardBtnPanel;
+public class StudentExamFrame extends JFrame {
     private static final int DEFAULT_WIDTH = 750;
-    private static final int DEFAULT_HEIGHT = 400;
+    private static final int DEFAULT_HEIGHT = 340;
 
+    private final StudentExamTablePanel studentExamTablePanel;
+    private final StudentExamTableBtnPanel tableBtnPanel;
 
     @PostConstruct
     private void prepareFrame() {
@@ -26,16 +27,15 @@ public class WelcomeStudentFrame extends JDialog {
     }
 
     private void setFrameUp() {
-        setTitle(ConstMessagesEN.DialogTitles.WELCOME_STUDENT_MODAL);
-        setDefaultCloseOperation(HIDE_ON_CLOSE);
+        setTitle("Exams");
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
         setLocationRelativeTo(null);
-        setResizable(true);
+        setResizable(false);
     }
 
     private void initComponents() {
-        add(welcomeStudentPanel, BorderLayout.CENTER);
-        add(studentDashboardBtnPanel, BorderLayout.SOUTH);
+        add(studentExamTablePanel, BorderLayout.CENTER);
+        add(tableBtnPanel, BorderLayout.SOUTH);
     }
-
 }

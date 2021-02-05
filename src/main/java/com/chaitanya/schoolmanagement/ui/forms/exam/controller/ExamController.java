@@ -195,7 +195,7 @@ public class ExamController extends AbstractFrameController {
 
     }
 
-    private void loadQuestionPapers() {
+    public void loadQuestionPapers() {
         List<QuestionPaper> questionPapers = questionPaperService.getAllQuestionPapers();
         questionPaperTableModel.clear();
         questionPaperTableModel.addEntities(questionPapers);

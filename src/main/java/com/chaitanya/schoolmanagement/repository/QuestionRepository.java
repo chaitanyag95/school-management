@@ -10,4 +10,6 @@ import java.util.List;
 @Repository
 public interface QuestionRepository extends JpaRepository<Question, String> {
     List<Question> findAllByQuestionPaperOrderByQuestionNoAsc(QuestionPaper questionPaper);
+
+    Question findByQuestionNoAndQuestionPaper(int questionNo , QuestionPaper questionPaper);
 }

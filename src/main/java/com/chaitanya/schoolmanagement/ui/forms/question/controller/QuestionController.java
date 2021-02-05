@@ -12,6 +12,7 @@ import com.chaitanya.schoolmanagement.ui.forms.exam.view.QuestionTableBtnPanel;
 import com.chaitanya.schoolmanagement.ui.forms.exam.view.QuestionTableFrame;
 import com.chaitanya.schoolmanagement.ui.forms.question.view.AddQuestionFrame;
 import com.chaitanya.schoolmanagement.ui.forms.question.view.EditQuestionFrame;
+import com.chaitanya.schoolmanagement.ui.forms.question.view.ViewQuestionFrame;
 import com.chaitanya.schoolmanagement.ui.forms.student.model.CourseComboBoxModel;
 import com.chaitanya.schoolmanagement.ui.forms.teacher.dashboard.view.TeacherDashboardFrame;
 import com.chaitanya.schoolmanagement.ui.shared.controller.AbstractFrameController;
@@ -45,6 +46,7 @@ public class QuestionController extends AbstractFrameController {
     private final QuestionTableModel questionTableModel;
     private final ExamDashboardFrame examDashboardFrame;
     private final EditQuestionFrame editQuestionFrame;
+    private final ViewQuestionFrame viewQuestionFrame;
 
 
     @PostConstruct
@@ -53,10 +55,37 @@ public class QuestionController extends AbstractFrameController {
         registerAction(questionTableBtnPanel.getAddQuestionBtn(), (e) -> openAddQuestionToQuestionPaper());
         registerAction(questionTableBtnPanel.getEditQuestionBtn(), (e) -> openEditQuestionFrame());
         registerAction(questionTableBtnPanel.getRemoveBtn(), (e) -> deleteQuestionsFromQuestionPaper());
+        registerAction(questionTableBtnPanel.getViewQuestionBtn(), (e) -> selectAndViewQuestion());
         registerAction(addQuestionFrame.getBackBtn(), (e) -> backToExamDashboard());
         registerAction(addQuestionFrame.getSaveBtn(), (e) -> saveQuestionInQuestionPaper());
         registerAction(questionDashboardFrame.getViewQuestionBtn(), (e) -> viewQuestionsInQuestionPaper());
         registerAction(editQuestionFrame.getBackBtn(), (e) -> backToQuestionTable());
+        registerAction(viewQuestionFrame.getNextBtn(), (e) -> openNextQuestion());
+
+    }
+
+
+    private void selectAndViewQuestion() {
+        try {
+            JTable questionPaperTable = questionTableFrame.getQuestionTablePanel().getQuestionTable();
+            int selectedRow = questionPaperTable.getSelectedRow();
+            if (selectedRow < 0) {
+                JOptionPane.showMessageDialog(null,
+                        ConstMessagesEN.Messages.NON_ROW_SELECTED,
+                        ConstMessagesEN.Messages.ALERT_TILE,
+                        JOptionPane.ERROR_MESSAGE);
+            } else {
+                Question question = questionTableModel.getEntityByRow(selectedRow);
+                viewQuestionFrame.setViewQuestionForm(question);
+                viewQuestionFrame.setVisible(true);
+            }
+        } catch (Exception e) {
+            Notifications.showDeleteRowErrorMessage();
+        }
+    }
+
+    private void openNextQuestion() {
+
     }
 
     private void deleteQuestionsFromQuestionPaper() {

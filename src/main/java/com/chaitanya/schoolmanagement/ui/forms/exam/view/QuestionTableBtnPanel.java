@@ -13,6 +13,7 @@ public class QuestionTableBtnPanel extends JPanel {
     private JButton addQuestionBtn;
     private JButton removeBtn;
     private JButton editQuestionBtn;
+    private JButton viewQuestionBtn;
 
 
     @PostConstruct
@@ -29,6 +30,9 @@ public class QuestionTableBtnPanel extends JPanel {
 
         removeBtn = new JButton(ConstMessagesEN.Labels.REMOVE_BTN);
         add(removeBtn);
+
+        viewQuestionBtn = new JButton(ConstMessagesEN.Labels.VIEW);
+        add(viewQuestionBtn);
 
     }
 }

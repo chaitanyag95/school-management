@@ -267,7 +267,7 @@ public class AddQuestionFrame extends JFrame {
         question.setAnswerTwo(answer_two.getText());
         question.setAnswerThree(answer_three.getText());
         question.setAnswerFour(answer_four.getText());
-        question.setCorrectAnswer(correctAnsCB.getSelectedIndex());
+        question.setCorrectAnswer((String) correctAnsCB.getSelectedItem());
         Optional<QuestionPaper> questionPaper = questionPaperService.getQuestionPaperById(questionPaperId);
         question.setQuestionPaper(questionPaper.get());
         return question;
@@ -286,6 +286,8 @@ public class AddQuestionFrame extends JFrame {
         answer_three.setText(Strings.EMPTY);
         answer_two.setText(Strings.EMPTY);
         answer_one.setText(Strings.EMPTY);
+        questionNoSpinner.setValue(0);
+        correctAnsCB.setModel(new DefaultComboBoxModel<>(new String[]{}));
     }
 
 }
