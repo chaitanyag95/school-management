@@ -33,5 +33,6 @@ public class QuestionPaper {
     @OneToMany
     @JoinColumn(name = "questionId")
     private List<Question> questions;
+    private String createdById;
 
 }

@@ -412,13 +412,14 @@ public class ViewQuestionFrame extends JFrame {
     }
 
     public NextQuestionPayload getQuestionNumberFromForm() {
+        String userId = questionPaperService.getUserIDRecordFromStore();
         int questionNo = 1;
         try {
             questionNo = Integer.parseInt(quesNoTF.getText());
         } catch (Exception e) {
             log.info(" ********** exception *******  " + e.getMessage());
         }
-        NextQuestionPayload nextQuestionPayload = new NextQuestionPayload(questionNo, questionPaperId);
+        NextQuestionPayload nextQuestionPayload = new NextQuestionPayload(questionNo, questionPaperId, userId);
         return nextQuestionPayload;
     }
 

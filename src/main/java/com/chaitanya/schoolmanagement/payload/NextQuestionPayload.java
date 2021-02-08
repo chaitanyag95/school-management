@@ -12,4 +12,5 @@ import lombok.Setter;
 public class NextQuestionPayload {
     private int questionNo;
     private String questionPaperId;
+    private String userId;
 }

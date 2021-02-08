@@ -28,6 +28,7 @@ public class Teacher {
     @ManyToOne
     @JoinColumn(name = "courseId")
     private Course course;
+    private String createdById;
 
     public Teacher(String fullName, String email, Course course, String phoneNumber, String password) {
         this.fullName = fullName;

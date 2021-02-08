@@ -3,6 +3,7 @@ package com.chaitanya.schoolmanagement.ui.forms.student.exam.controller;
 import com.chaitanya.schoolmanagement.model.exam.Question;
 import com.chaitanya.schoolmanagement.model.exam.QuestionPaper;
 import com.chaitanya.schoolmanagement.payload.NextQuestionPayload;
+import com.chaitanya.schoolmanagement.service.exam.ExamResultService;
 import com.chaitanya.schoolmanagement.service.exam.QuestionPaperService;
 import com.chaitanya.schoolmanagement.service.exam.QuestionService;
 import com.chaitanya.schoolmanagement.ui.forms.exam.view.ExamFrame;
@@ -29,6 +30,8 @@ public class StudentExamController extends AbstractFrameController {
     private final StudentExamTableModel questionPaperTableModel;
     private final QuestionService questionService;
     private final ViewQuestionFrame viewQuestionFrame;
+    private final ExamResultService examResultService;
+    private final QuestionPaperService questionPaperService;
 
     @PostConstruct
     private void prepareListeners() {
@@ -71,7 +74,9 @@ public class StudentExamController extends AbstractFrameController {
             } else {
                 QuestionPaper questionPaper = questionPaperTableModel.getEntityByRow(selectedRow);
                 List<Question> questionList = questionService.findAllQuestionsByQuestionPaperId(questionPaper.getId());
+                String studentId = questionPaperService.getUserIDRecordFromStore();
                 viewQuestionFrame.setViewQuestionForm(questionList.get(0));
+                examResultService.saveExamResult(questionPaper.getId(), studentId);
                 viewQuestionFrame.setVisible(true);
             }
         } catch (Exception e) {
