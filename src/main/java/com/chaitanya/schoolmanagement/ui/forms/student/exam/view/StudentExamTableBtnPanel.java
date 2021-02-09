@@ -1,6 +1,5 @@
 package com.chaitanya.schoolmanagement.ui.forms.student.exam.view;
 
-import com.chaitanya.schoolmanagement.util.constant.ConstMessagesEN;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
 
@@ -12,6 +11,7 @@ import javax.swing.*;
 public class StudentExamTableBtnPanel extends JPanel {
     private JButton startExamBtn;
     private JButton backBtn;
+    private JButton resultBtn;
 
 
     @PostConstruct
@@ -25,5 +25,8 @@ public class StudentExamTableBtnPanel extends JPanel {
 
         backBtn = new JButton("Back");
         add(backBtn);
+
+        resultBtn = new JButton("Result");
+        add(resultBtn);
     }
 }

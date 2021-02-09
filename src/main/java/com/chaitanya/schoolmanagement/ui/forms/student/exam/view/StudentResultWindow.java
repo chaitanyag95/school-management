@@ -1,8 +1,14 @@
 package com.chaitanya.schoolmanagement.ui.forms.student.exam.view;
 
+import com.chaitanya.schoolmanagement.model.exam.ExamResult;
+import com.chaitanya.schoolmanagement.model.exam.QuestionPaper;
+import com.chaitanya.schoolmanagement.model.student.Student;
+import com.chaitanya.schoolmanagement.service.student.StudentService;
 import com.chaitanya.schoolmanagement.util.constant.ConstMessagesEN;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import org.checkerframework.checker.nullness.qual.AssertNonNullIfNonNull;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -31,7 +37,9 @@ public class StudentResultWindow extends JFrame {
     private JLabel resultLbl;
     private JLabel totalQuesLbl;
     private JTextField totalQuestTF;
-    // End of variables declaration   
+    // End of variables declaration
+    @Autowired
+    private StudentService studentService;
 
    
     /*public Result(String total, String attempt, String correct, String incorrect, String remain, String name) {
@@ -60,7 +68,7 @@ public class StudentResultWindow extends JFrame {
     }
 
     private void setPanelUp() {
-        setTitle(ConstMessagesEN.Labels.VIEW_QUESTION);
+        setTitle("Result");
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         //  setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
         setLocationRelativeTo(null);
@@ -90,7 +98,7 @@ public class StudentResultWindow extends JFrame {
 
 
         totalQuestTF.setEditable(false);
-        totalQuestTF.setForeground(new java.awt.Color(255, 255, 255));
+        totalQuestTF.setForeground(new java.awt.Color(0, 0, 0));
 
         attemptedQuestTF.setEditable(false);
         attemptedQuestTF.setText("                    ");
@@ -129,8 +137,8 @@ public class StudentResultWindow extends JFrame {
         resultLbl.setForeground(new java.awt.Color(0, 0, 0));
         resultLbl.setText("Result of -");
 
-        jLabel7.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("Pass/Failed");
 
         percentageLbl.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
@@ -181,7 +189,7 @@ public class StudentResultWindow extends JFrame {
                                                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                                                 .addComponent(paperCodeLbl)
                                                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                                .addComponent(jLabel7, GroupLayout.PREFERRED_SIZE, 154, GroupLayout.PREFERRED_SIZE))))
+                                                                .addComponent(jLabel7, GroupLayout.PREFERRED_SIZE, 300, GroupLayout.PREFERRED_SIZE))))
                                         .addGroup(layout.createSequentialGroup()
                                                 .addGap(0, 0, Short.MAX_VALUE)
                                                 .addComponent(percentageTF, GroupLayout.PREFERRED_SIZE, 180, GroupLayout.PREFERRED_SIZE)
@@ -228,4 +236,15 @@ public class StudentResultWindow extends JFrame {
 
         pack();
     }// </editor-fold>
+
+    public void setExamResult(ExamResult examResult, QuestionPaper questionPaper, String studentId) {
+        Student student = studentService.getStudentById(studentId);
+        attemptedQuestTF.setText(String.valueOf(examResult.getAttemptedQuestion()));
+        totalQuestTF.setText(String.valueOf(examResult.getTotalQuestion()));
+        correctQuestTF.setText(String.valueOf(examResult.getCorrectQuestion()));
+        incorrectQuestTF.setText(String.valueOf(examResult.getInCorrectQuestion()));
+        percentageTF.setText(String.valueOf(examResult.getPercentage()));
+        remainQuestTF.setText(String.valueOf(examResult.getRemainingQuestion()));
+        jLabel7.setText(student.getFullName() + " " + questionPaper.getPaperCode() + " " + examResult.getResult().toString());
+    }
 }

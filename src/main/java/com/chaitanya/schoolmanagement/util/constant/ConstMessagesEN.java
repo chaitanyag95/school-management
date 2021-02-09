@@ -30,6 +30,8 @@ public interface ConstMessagesEN {
         String INFORMATION_TITLE = "Information";
         String DELETE_ROW_ERROR = "Could not delete a row. Check if there are any connections between tables.";
         String DELETED_QUESTION_PAPER = " Question Paper Successfully Deleted";
+        String NOT_APPEARED = "You are not appeared in the exam";
+        String APPEARED = "You are already appeared in the exam";
     }
 
     interface Labels {

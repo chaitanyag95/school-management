@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.swing.*;
+import java.awt.*;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
@@ -46,6 +47,7 @@ public class ViewQuestionFrame extends JFrame {
     private JTextArea quesTF;
     private JButton submitBtn;
     private JLabel quesLbl;
+    private JLabel timerLbl;
     // End of variables declaration
     private static final int DEFAULT_WIDTH = 750;
     private static final int DEFAULT_HEIGHT = 340;
@@ -158,6 +160,7 @@ public class ViewQuestionFrame extends JFrame {
         submitBtn = new JButton();
         prevBtn = new JButton();
         nextBtn = new JButton();
+        timerLbl = new JLabel();
 
         quesNoTF.setEditable(false);
 
@@ -165,6 +168,11 @@ public class ViewQuestionFrame extends JFrame {
         courseLbl.setForeground(new java.awt.Color(0, 0, 0));
         courseLbl.setHorizontalAlignment(SwingConstants.CENTER);
         courseLbl.setText("Get Course Name");
+
+        timerLbl.setText("hh:mm:ss");
+        timerLbl.setFont(new Font("Arial", 1, 14));
+        timerLbl.setForeground(new java.awt.Color(0, 0, 0));
+        timerLbl.setHorizontalAlignment(SwingConstants.CENTER);
 
         paperCodeAndTitleLbl.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
         paperCodeAndTitleLbl.setForeground(new java.awt.Color(0, 0, 0));

@@ -8,11 +8,11 @@ import com.chaitanya.schoolmanagement.payload.NextQuestionPayload;
 import com.chaitanya.schoolmanagement.service.exam.ExamResultService;
 import com.chaitanya.schoolmanagement.service.exam.QuestionPaperService;
 import com.chaitanya.schoolmanagement.service.exam.QuestionService;
-import com.chaitanya.schoolmanagement.ui.forms.exam.view.ExamFrame;
 import com.chaitanya.schoolmanagement.ui.forms.question.view.ViewQuestionFrame;
 import com.chaitanya.schoolmanagement.ui.forms.student.exam.model.StudentExamTableModel;
 import com.chaitanya.schoolmanagement.ui.forms.student.exam.view.StudentExamFrame;
 import com.chaitanya.schoolmanagement.ui.forms.student.exam.view.StudentExamTableBtnPanel;
+import com.chaitanya.schoolmanagement.ui.forms.student.exam.view.StudentResultWindow;
 import com.chaitanya.schoolmanagement.ui.shared.controller.AbstractFrameController;
 import com.chaitanya.schoolmanagement.util.constant.ConstMessagesEN;
 import com.chaitanya.schoolmanagement.util.notification.Notifications;
@@ -34,6 +34,7 @@ public class StudentExamController extends AbstractFrameController {
     private final ViewQuestionFrame viewQuestionFrame;
     private final ExamResultService examResultService;
     private final QuestionPaperService questionPaperService;
+    private final StudentResultWindow studentResultWindow;
 
     @PostConstruct
     private void prepareListeners() {
@@ -42,6 +43,28 @@ public class StudentExamController extends AbstractFrameController {
         registerAction(viewQuestionFrame.getNextBtn(), (e) -> getNextQuestion());
         registerAction(viewQuestionFrame.getPrevBtn(), (e) -> getPreviousQuestion());
         registerAction(viewQuestionFrame.getSubmitBtn(), (e) -> submitExam());
+        registerAction(studentExamTableBtnPanel.getResultBtn(), (e) -> seeResultWindow());
+    }
+
+    private void seeResultWindow() {
+        try {
+            JTable questionPaperTable = studentExamFrame.getStudentExamTablePanel().getQuestionPaperTable();
+            int selectedRow = questionPaperTable.getSelectedRow();
+            if (selectedRow < 0) {
+                JOptionPane.showMessageDialog(null,
+                        ConstMessagesEN.Messages.NON_ROW_SELECTED,
+                        ConstMessagesEN.Messages.ALERT_TILE,
+                        JOptionPane.ERROR_MESSAGE);
+            } else {
+                QuestionPaper questionPaper = questionPaperTableModel.getEntityByRow(selectedRow);
+                String studentId = questionPaperService.getUserIDRecordFromStore();
+                ExamResult examResult = examResultService.getExamResultByQuestionPaperAndStudentId(questionPaper.getId(), studentId);
+                studentResultWindow.setExamResult(examResult, questionPaper, studentId);
+                studentResultWindow.setVisible(true);
+            }
+        } catch (Exception e) {
+            Notifications.showNotAppearedErrorMessage();
+        }
     }
 
     private void submitExam() {
@@ -108,6 +131,16 @@ public class StudentExamController extends AbstractFrameController {
                 viewQuestionFrame.setViewQuestionForm(questionList.get(0));
                 examResultService.saveExamResult(questionPaper.getId(), studentId);
                 viewQuestionFrame.setVisible(true);
+                /*ExamResult examResult = examResultService.getExamResultByQuestionPaperAndStudentId(questionPaper.getId(), questionPaperService.getUserIDRecordFromStore());
+                if (examResult == null) {
+                    List<Question> questionList = questionService.findAllQuestionsByQuestionPaperId(questionPaper.getId());
+                    String studentId = questionPaperService.getUserIDRecordFromStore();
+                    viewQuestionFrame.setViewQuestionForm(questionList.get(0));
+                    examResultService.saveExamResult(questionPaper.getId(), studentId);
+                    viewQuestionFrame.setVisible(true);
+                } else {
+                    Notifications.showAppearedErrorMessage();
+                }*/
             }
         } catch (Exception e) {
             Notifications.showDeleteRowErrorMessage();

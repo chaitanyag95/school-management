@@ -34,4 +34,18 @@ public class Notifications {
                 ConstMessagesEN.Messages.ALERT_TILE,
                 JOptionPane.INFORMATION_MESSAGE);
     }
+
+    public static void showNotAppearedErrorMessage() {
+        JOptionPane.showMessageDialog(null,
+                ConstMessagesEN.Messages.NOT_APPEARED,
+                ConstMessagesEN.Messages.ALERT_TILE,
+                JOptionPane.ERROR_MESSAGE);
+    }
+
+    public static void showAppearedErrorMessage() {
+        JOptionPane.showMessageDialog(null,
+                ConstMessagesEN.Messages.APPEARED,
+                ConstMessagesEN.Messages.ALERT_TILE,
+                JOptionPane.ERROR_MESSAGE);
+    }
 }
