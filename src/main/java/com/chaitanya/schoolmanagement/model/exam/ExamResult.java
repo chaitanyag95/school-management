@@ -1,5 +1,6 @@
 package com.chaitanya.schoolmanagement.model.exam;
 
+import com.chaitanya.schoolmanagement.enums.ResultStatus;
 import com.chaitanya.schoolmanagement.model.student.Student;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,5 +32,9 @@ public class ExamResult {
     private int totalQuestion;
     private int attemptedQuestion = 0;
     private int remainingQuestion;
-    private String result;
+    private int correctQuestion = 0;
+    private int inCorrectQuestion = 0;
+    private double percentage;
+    private ResultStatus result;
+
 }

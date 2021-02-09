@@ -1,18 +1,24 @@
 package com.chaitanya.schoolmanagement.ui.forms.question.view;
 
+import com.chaitanya.schoolmanagement.model.exam.ExamResult;
 import com.chaitanya.schoolmanagement.model.exam.Question;
 import com.chaitanya.schoolmanagement.model.exam.QuestionPaper;
 import com.chaitanya.schoolmanagement.payload.NextQuestionPayload;
+import com.chaitanya.schoolmanagement.service.exam.ExamResultService;
 import com.chaitanya.schoolmanagement.service.exam.QuestionPaperService;
+import com.chaitanya.schoolmanagement.service.exam.QuestionService;
 import com.chaitanya.schoolmanagement.util.constant.ConstMessagesEN;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.swing.*;
-import java.awt.*;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 
@@ -25,7 +31,6 @@ public class ViewQuestionFrame extends JFrame {
     // Variables declaration - do not modify
     private JLabel bgLbl;
     private ButtonGroup buttonGroup1;
-    private ButtonGroup buttonGroup2;
     private JLabel courseLbl;
     private JScrollPane jScrollPane1;
     private JSeparator jSeparator1;
@@ -48,6 +53,10 @@ public class ViewQuestionFrame extends JFrame {
     private String questionId;
     @Autowired
     private QuestionPaperService questionPaperService;
+    @Autowired
+    private ExamResultService examResultService;
+    @Autowired
+    private QuestionService questionService;
 
 
     @PostConstruct
@@ -135,7 +144,6 @@ public class ViewQuestionFrame extends JFrame {
     private void initComponents() {
 
         buttonGroup1 = new ButtonGroup();
-        buttonGroup2 = new ButtonGroup();
         courseLbl = new JLabel();
         paperCodeAndTitleLbl = new JLabel();
         jScrollPane1 = new JScrollPane();
@@ -184,12 +192,15 @@ public class ViewQuestionFrame extends JFrame {
 
         optionOneRB.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
         optionOneRB.setText("Option 1");
+        buttonGroup1.add(optionOneRB);
 
         optionTwoRB.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
         optionTwoRB.setText("Option 2");
+        buttonGroup1.add(optionTwoRB);
 
         optionThreeRB.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
         optionThreeRB.setText("Option 3");
+        buttonGroup1.add(optionThreeRB);
         /*optionThreeRB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 optionThreeRBActionPerformed(evt);
@@ -198,6 +209,7 @@ public class ViewQuestionFrame extends JFrame {
 
         optionFourRB.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
         optionFourRB.setText("Option 4");
+        buttonGroup1.add(optionFourRB);
 
         submitBtn.setText("Submit");
         /*submitBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -395,7 +407,7 @@ public class ViewQuestionFrame extends JFrame {
         });
     }*/
     public void setViewQuestionForm(Question question) {
-        log.info("******** setting view questionForm question  ->  method called from question controller - > loadQuestion() **********");
+        log.info("******** setting view questionForm question  - > loadQuestion() **********");
         quesTF.setText(question.getQuestion());
         quesNoTF.setText(String.valueOf(question.getQuestionNo()));
         //questionNoSpinner.setValue(question.getQuestionNo());
@@ -411,6 +423,42 @@ public class ViewQuestionFrame extends JFrame {
         paperCodeAndTitleLbl.setText(questionPaper.get().getPaperCode() + " " + questionPaper.get().getPaperTitle());
     }
 
+    public ExamResult getExamResultFromForm() {
+        String examResultId = questionPaperService.getExamResultIdFromStore();
+        String studentId = questionPaperService.getUserIDRecordFromStore();
+        String questionPaperId = questionPaperService.getQuestionPaperIdFromStore();
+        Question question = questionService.getQuestionById(questionId);
+        ExamResult examResult = examResultService.getExamResultByIdAndStudentAndQuestionPaper(examResultId, studentId, questionPaperId);
+        Map<Question, String> questionAnswerMap = new HashMap<>();
+        String getAnswerSelected = getAnswerSelected();
+        questionAnswerMap.put(question, getAnswerSelected);
+        examResult.setQuestionAnswerMap(questionAnswerMap);
+        if (checkQuestionResult(question, getAnswerSelected)) {
+            examResult.setCorrectQuestion(examResult.getCorrectQuestion() + 1);
+        } else {
+            examResult.setCorrectQuestion(examResult.getInCorrectQuestion() + 1);
+        }
+        return examResult;
+    }
+
+    public String getAnswerSelected() {
+        String getAnswerSelected = "";
+        for (Enumeration<AbstractButton> allOptions = buttonGroup1.getElements(); allOptions.hasMoreElements(); ) {
+            AbstractButton button = allOptions.nextElement();
+            if (button.isSelected()) {
+                getAnswerSelected = button.getText();
+            }
+        }
+        return getAnswerSelected;
+    }
+
+    public Boolean checkQuestionResult(Question question, String getAnswerSelected) {
+        if (question.getCorrectAnswer().equals(getAnswerSelected)) {
+            return Boolean.TRUE;
+        }
+        return Boolean.FALSE;
+    }
+
     public NextQuestionPayload getQuestionNumberFromForm() {
         String userId = questionPaperService.getUserIDRecordFromStore();
         int questionNo = 1;
@@ -419,8 +467,12 @@ public class ViewQuestionFrame extends JFrame {
         } catch (Exception e) {
             log.info(" ********** exception *******  " + e.getMessage());
         }
-        NextQuestionPayload nextQuestionPayload = new NextQuestionPayload(questionNo, questionPaperId, userId);
+        NextQuestionPayload nextQuestionPayload = new NextQuestionPayload(questionNo, questionPaperId, userId, questionId);
         return nextQuestionPayload;
+    }
+
+    public void clearSelection() {
+        buttonGroup1.clearSelection();
     }
 
 }

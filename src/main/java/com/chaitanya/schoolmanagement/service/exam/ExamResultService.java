@@ -40,6 +40,15 @@ public class ExamResultService {
         return Boolean.FALSE;
     }
 
+    public void save(ExamResult examResult) {
+        examResultRepository.save(examResult);
+    }
+
+
+    public ExamResult getExamResultById(String id) {
+        return examResultRepository.findById(id).get();
+    }
+
     public boolean isExamResultExistByQuestionPaperAndStudentId(String questionPaperId, String studentId) {
         QuestionPaper questionPaper = questionPaperService.getQuestionPaperById(questionPaperId).get();
         Student student = studentService.getStudentById(studentId);
@@ -48,6 +57,19 @@ public class ExamResultService {
             return Boolean.TRUE;
         }
         return Boolean.FALSE;
+    }
+
+    public ExamResult getExamResultByQuestionPaperAndStudentId(String questionPaperId, String studentId) {
+        QuestionPaper questionPaper = questionPaperService.getQuestionPaperById(questionPaperId).get();
+        Student student = studentService.getStudentById(studentId);
+        ExamResult examResult = examResultRepository.findByStudentAndQuestionPaper(student, questionPaper);
+        return examResult;
+    }
+
+    public ExamResult getExamResultByIdAndStudentAndQuestionPaper(String examResultId, String studentId, String questionPaperId) {
+        QuestionPaper questionPaper = questionPaperService.getQuestionPaperById(questionPaperId).get();
+        Student student = studentService.getStudentById(studentId);
+        return examResultRepository.findByIdAndStudentAndQuestionPaper(examResultId, student, questionPaper);
     }
 
     public void saveExamResult(String questionPaperId, String studentId) {
@@ -60,26 +82,34 @@ public class ExamResultService {
             examResult.setTotalQuestion(questionService.findAllQuestionsByQuestionPaperId(questionPaperId).size());
             examResult.setRemainingQuestion(questionService.findAllQuestionsByQuestionPaperId(questionPaperId).size());
             examResultRepository.save(examResult);
-            try {
-                FileReader fileReader = new FileReader("/home/chaitannya/Persistence/src/main/resources/userDetails.csv");
-                CSVReader csvReader = new CSVReaderBuilder(fileReader).build();
-                List<String[]> allData = csvReader.readAll();
-                ArrayList<String> headers = new ArrayList<String>(Arrays.asList(allData.get(0)));
-                headers.add("examResultId");
-                headers.add("questionPaperId");
-                ArrayList<String> storeInfo = new ArrayList<String>(Arrays.asList(allData.get(1)));
-                storeInfo.add(examResult.getId());
-                storeInfo.add(questionPaperId);
-                csvReader.close();
-                FileWriter fileWriter = new FileWriter("/home/chaitannya/Persistence/src/main/resources/userDetails.csv");
-                CSVWriter writer = new CSVWriter(fileWriter);
-                writer.writeNext(headers.toArray(new String[headers.size()]));
-                writer.writeNext(storeInfo.toArray(new String[headers.size()]));
-                writer.flush();
-                writer.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            setQuestionPaperIdAndResultIdInStore(examResult.getId(), questionPaperId);
+        } else {
+            ExamResult examResult = getExamResultByQuestionPaperAndStudentId(questionPaperId, studentId);
+            setQuestionPaperIdAndResultIdInStore(examResult.getId(), questionPaperId);
         }
+    }
+
+    public void setQuestionPaperIdAndResultIdInStore(String examResultId, String questionPaperId) {
+        try {
+            FileReader fileReader = new FileReader("/home/chaitannya/Persistence/src/main/resources/userDetails.csv");
+            CSVReader csvReader = new CSVReaderBuilder(fileReader).build();
+            List<String[]> allData = csvReader.readAll();
+            ArrayList<String> headers = new ArrayList<String>(Arrays.asList(allData.get(0)));
+            headers.add("examResultId");
+            headers.add("questionPaperId");
+            ArrayList<String> storeInfo = new ArrayList<String>(Arrays.asList(allData.get(1)));
+            storeInfo.add(examResultId);
+            storeInfo.add(questionPaperId);
+            csvReader.close();
+            FileWriter fileWriter = new FileWriter("/home/chaitannya/Persistence/src/main/resources/userDetails.csv");
+            CSVWriter writer = new CSVWriter(fileWriter);
+            writer.writeNext(headers.toArray(new String[headers.size()]));
+            writer.writeNext(storeInfo.toArray(new String[headers.size()]));
+            writer.flush();
+            writer.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 }

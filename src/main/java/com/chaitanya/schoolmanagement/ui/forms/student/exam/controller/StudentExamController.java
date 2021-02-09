@@ -1,5 +1,7 @@
 package com.chaitanya.schoolmanagement.ui.forms.student.exam.controller;
 
+import com.chaitanya.schoolmanagement.enums.ResultStatus;
+import com.chaitanya.schoolmanagement.model.exam.ExamResult;
 import com.chaitanya.schoolmanagement.model.exam.Question;
 import com.chaitanya.schoolmanagement.model.exam.QuestionPaper;
 import com.chaitanya.schoolmanagement.payload.NextQuestionPayload;
@@ -39,18 +41,46 @@ public class StudentExamController extends AbstractFrameController {
         registerAction(studentExamTableBtnPanel.getStartExamBtn(), (e) -> startExam());
         registerAction(viewQuestionFrame.getNextBtn(), (e) -> getNextQuestion());
         registerAction(viewQuestionFrame.getPrevBtn(), (e) -> getPreviousQuestion());
+        registerAction(viewQuestionFrame.getSubmitBtn(), (e) -> submitExam());
+    }
+
+    private void submitExam() {
+        String examResultId = questionPaperService.getExamResultIdFromStore();
+        ExamResult examResult = examResultService.getExamResultById(examResultId);
+        int correctQuestion = examResult.getCorrectQuestion();
+        int totalQuestion = examResult.getTotalQuestion();
+        try {
+            double percentage = (correctQuestion * 100) / totalQuestion;
+            if (percentage > 33) {
+                examResult.setResult(ResultStatus.PASSED);
+            } else {
+                examResult.setResult(ResultStatus.FAILED);
+            }
+            examResult.setPercentage(percentage);
+            examResultService.save(examResult);
+        } catch (ArithmeticException arithmeticException) {
+            System.out.println(arithmeticException.getStackTrace());
+        }
     }
 
 
     private void getNextQuestion() {
         NextQuestionPayload nextQuestionPayload = viewQuestionFrame.getQuestionNumberFromForm();
+        examResultService.save(viewQuestionFrame.getExamResultFromForm());
         try {
             Question question = questionService.getNextQuestion(nextQuestionPayload);
             viewQuestionFrame.setVisible(false);
             viewQuestionFrame.setViewQuestionForm(question);
+            viewQuestionFrame.clearSelection();
+            viewQuestionFrame.setVisible(true);
+        } catch (NullPointerException nullPointerException) {
+            log.info("******* this is last question ********");
+            Question question = questionService.getQuestionById(nextQuestionPayload.getQuestionId());
+            viewQuestionFrame.setVisible(false);
+            viewQuestionFrame.setViewQuestionForm(question);
             viewQuestionFrame.setVisible(true);
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            ex.printStackTrace();
         }
     }
 

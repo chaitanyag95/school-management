@@ -1,7 +1,6 @@
 package com.chaitanya.schoolmanagement.ui.forms.student.exam.view;
 
 
-import com.chaitanya.schoolmanagement.util.constant.ConstMessagesEN;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.stereotype.Component;

@@ -9,7 +9,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -38,16 +40,45 @@ public class QuestionPaperService {
         return questionPaper;
     }
 
+    public String[] getDetailsStoredInStore() throws IOException {
+        FileReader fileReader = new FileReader("/home/chaitannya/Persistence/src/main/resources/userDetails.csv");
+        CSVReader csvReader = new CSVReaderBuilder(fileReader)
+                .withSkipLines(1)
+                .build();
+        List<String[]> allData = csvReader.readAll();
+        String[] userDetails = allData.get(0);
+        return userDetails;
+    }
+
     public String getUserIDRecordFromStore() {
         try {
-            FileReader fileReader = new FileReader("/home/chaitannya/Persistence/src/main/resources/userDetails.csv");
-            CSVReader csvReader = new CSVReaderBuilder(fileReader)
-                    .withSkipLines(1)
-                    .build();
-            List<String[]> allData = csvReader.readAll();
-            String[] userDetails = allData.get(0);
+            String[] userDetails = getDetailsStoredInStore();
             Optional<String> id = Arrays.stream(userDetails).findFirst();
             return id.get();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public String getQuestionPaperIdFromStore() {
+        try {
+            String[] userDetails = getDetailsStoredInStore();
+            log.info(" ****** getting question paper id from store ****** " + userDetails[5]);
+            return userDetails[5];
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public String getExamResultIdFromStore() {
+        try {
+            String[] userDetails = getDetailsStoredInStore();
+            log.info(" ****** getting exam result  id from store ****** " + userDetails[4]);
+            return userDetails[4];
+
         } catch (Exception e) {
             e.printStackTrace();
         }

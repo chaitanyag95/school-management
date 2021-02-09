@@ -60,4 +60,8 @@ public class QuestionService {
         return question;
     }
 
+    public Question getQuestionById(String questionId) {
+        return questionRepository.findById(questionId).get();
+    }
+
 }

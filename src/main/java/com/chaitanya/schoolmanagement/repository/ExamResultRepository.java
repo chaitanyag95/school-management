@@ -9,4 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ExamResultRepository extends JpaRepository<ExamResult, String> {
     ExamResult findByStudentAndQuestionPaper(Student student, QuestionPaper questionPaper);
+
+    ExamResult findByIdAndStudentAndQuestionPaper(String id, Student student, QuestionPaper questionPaper);
 }
