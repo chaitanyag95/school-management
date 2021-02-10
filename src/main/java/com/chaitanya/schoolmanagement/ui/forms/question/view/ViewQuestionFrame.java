@@ -9,18 +9,18 @@ import com.chaitanya.schoolmanagement.service.exam.QuestionPaperService;
 import com.chaitanya.schoolmanagement.service.exam.QuestionService;
 import com.chaitanya.schoolmanagement.util.constant.ConstMessagesEN;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.swing.*;
+import javax.swing.Timer;
 import java.awt.*;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 
 @Component
@@ -53,6 +53,7 @@ public class ViewQuestionFrame extends JFrame {
     private static final int DEFAULT_HEIGHT = 340;
     private String questionPaperId;
     private String questionId;
+    private int parsedSeconds;
     @Autowired
     private QuestionPaperService questionPaperService;
     @Autowired
@@ -169,10 +170,7 @@ public class ViewQuestionFrame extends JFrame {
         courseLbl.setHorizontalAlignment(SwingConstants.CENTER);
         courseLbl.setText("Get Course Name");
 
-        timerLbl.setText("hh:mm:ss");
-        timerLbl.setFont(new Font("Arial", 1, 14));
-        timerLbl.setForeground(new java.awt.Color(0, 0, 0));
-        timerLbl.setHorizontalAlignment(SwingConstants.CENTER);
+        submitBtn.setText("Submit");
 
         paperCodeAndTitleLbl.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
         paperCodeAndTitleLbl.setForeground(new java.awt.Color(0, 0, 0));
@@ -184,117 +182,100 @@ public class ViewQuestionFrame extends JFrame {
         quesTF.setEditable(false);
         jScrollPane1.setViewportView(quesTF);
 
-        quesNoLbl.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
-        quesNoLbl.setForeground(new java.awt.Color(0, 0, 0));
+        prevBtn.setText("Previous");
+
+
+        nextBtn.setText("Next");
+
+
+        quesNoLbl.setForeground(new Color(0, 0, 0));
+        quesNoLbl.setFont(new Font("Ubuntu", 1, 18));
         quesNoLbl.setText("Ques_No -");
 
-        /*quesNoTF.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                quesNoTFActionPerformed(evt);
-            }
-        });*/
-
-        quesLbl.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
-        quesLbl.setForeground(new java.awt.Color(0, 0, 0));
-        quesLbl.setText("Question");
-
-        optionOneRB.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
-        optionOneRB.setText("Option 1");
         buttonGroup1.add(optionOneRB);
+        optionOneRB.setFont(new Font("Ubuntu", 1, 18)); // NOI18N
+        optionOneRB.setForeground(new Color(0, 0, 0));
+        optionOneRB.setText("Option One");
 
-        optionTwoRB.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
-        optionTwoRB.setText("Option 2");
+
         buttonGroup1.add(optionTwoRB);
+        optionTwoRB.setFont(new Font("Ubuntu", 1, 18)); // NOI18N
+        optionTwoRB.setForeground(new Color(0, 0, 0));
+        optionTwoRB.setText("Option Two");
 
-        optionThreeRB.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
-        optionThreeRB.setText("Option 3");
         buttonGroup1.add(optionThreeRB);
-        /*optionThreeRB.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                optionThreeRBActionPerformed(evt);
-            }
-        });*/
+        optionThreeRB.setFont(new Font("Ubuntu", 1, 18)); // NOI18N
+        optionThreeRB.setForeground(new Color(0, 0, 0));
+        optionThreeRB.setText("Option Three");
 
-        optionFourRB.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
-        optionFourRB.setText("Option 4");
         buttonGroup1.add(optionFourRB);
+        optionFourRB.setFont(new Font("Ubuntu", 1, 18)); // NOI18N
+        optionFourRB.setForeground(new Color(0, 0, 0));
+        optionFourRB.setText("Option Four");
 
-        submitBtn.setText("Submit");
-        /*submitBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                submitBtnActionPerformed(evt);
-            }
-        });
-*/
-        prevBtn.setText("Previous");
-        /*prevBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                prevBtnActionPerformed(evt);
-            }
-        });
-*/
-        nextBtn.setText("Next");
-        /*nextBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nextBtnActionPerformed(evt);
-            }
-        });*/
+        quesLbl.setText("Question");
+        quesLbl.setFont(new Font("Ubuntu", 1, 18));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+
+        timerLbl.setFont(new Font("Ubuntu", 1, 18)); // NOI18N
+        timerLbl.setForeground(new Color(0, 0, 0));
+        timerLbl.setText("HH:MM:SS");
+
+        GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(courseLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(268, 268, 268))
+                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGap(18, 18, 18)
+                                .addComponent(timerLbl)
+                                .addGap(160, 160, 160)
+                                .addComponent(courseLbl)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                        .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                         .addGroup(layout.createSequentialGroup()
-                                                .addGap(14, 14, 14)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(quesNoLbl)
-                                                        .addGroup(layout.createSequentialGroup()
-                                                                .addComponent(quesLbl)
-                                                                .addGap(76, 76, 76)
-                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                        .addComponent(quesNoTF, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                        .addComponent(optionOneRB)
-                                                                        .addComponent(optionTwoRB)
-                                                                        .addComponent(optionThreeRB)
-                                                                        .addComponent(optionFourRB)))))
+                                                .addGap(30, 30, 30)
+                                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                                        .addComponent(quesLbl)
+                                                        .addComponent(quesNoLbl))
+                                                .addGap(67, 67, 67)
+                                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                                        .addComponent(optionTwoRB)
+                                                        .addComponent(optionOneRB)
+                                                        .addComponent(optionFourRB)
+                                                        .addComponent(optionThreeRB)
+                                                        .addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 492, GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(quesNoTF, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)))
                                         .addGroup(layout.createSequentialGroup()
-                                                .addGap(213, 213, 213)
+                                                .addGap(154, 154, 154)
+                                                .addComponent(paperCodeAndTitleLbl, GroupLayout.PREFERRED_SIZE, 366, GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(144, 144, 144)
                                                 .addComponent(submitBtn)
-                                                .addGap(47, 47, 47)
+                                                .addGap(58, 58, 58)
                                                 .addComponent(prevBtn)
-                                                .addGap(49, 49, 49)
-                                                .addComponent(nextBtn))
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addGap(142, 142, 142)
-                                                .addComponent(paperCodeAndTitleLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 503, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addContainerGap(29, Short.MAX_VALUE))
+                                                .addGap(40, 40, 40)
+                                                .addComponent(nextBtn, GroupLayout.PREFERRED_SIZE, 64, GroupLayout.PREFERRED_SIZE)))
+                                .addContainerGap(25, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(courseLbl)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(paperCodeAndTitleLbl)
-                                .addGap(47, 47, 47)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(quesNoLbl)
-                                        .addComponent(quesNoTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addGap(35, 35, 35)
-                                                .addComponent(quesLbl))
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addGap(26, 26, 26)
-                                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(27, 27, 27)
+                                .addGap(19, 19, 19)
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                        .addComponent(timerLbl)
+                                        .addComponent(courseLbl))
+                                .addGap(18, 18, 18)
+                                .addComponent(paperCodeAndTitleLbl, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
+                                .addGap(24, 24, 24)
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                        .addComponent(quesNoTF, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(quesNoLbl))
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                        .addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(quesLbl))
+                                .addGap(18, 18, 18)
                                 .addComponent(optionOneRB)
                                 .addGap(18, 18, 18)
                                 .addComponent(optionTwoRB)
@@ -302,14 +283,13 @@ public class ViewQuestionFrame extends JFrame {
                                 .addComponent(optionThreeRB)
                                 .addGap(18, 18, 18)
                                 .addComponent(optionFourRB)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addGap(52, 52, 52)
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                         .addComponent(submitBtn)
                                         .addComponent(prevBtn)
                                         .addComponent(nextBtn))
-                                .addGap(19, 19, 19))
+                                .addGap(23, 23, 23))
         );
-
     }// </editor-fold>                        
 
     // ResultSet rs1;
@@ -414,6 +394,29 @@ public class ViewQuestionFrame extends JFrame {
             }
         });
     }*/
+
+    Timer timer = new Timer(500, new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            parsedSeconds--;
+            if (parsedSeconds == 0) {
+                ((Timer) e.getSource()).stop();
+                submitBtn.doClick();
+            }
+            long hours = TimeUnit.SECONDS.toHours(parsedSeconds);
+            long minutes = TimeUnit.SECONDS.toMinutes(parsedSeconds) - (TimeUnit.SECONDS.toHours(parsedSeconds) * 60);
+            long seconds = TimeUnit.SECONDS.toSeconds(parsedSeconds) - (TimeUnit.SECONDS.toMinutes(parsedSeconds) * 60);
+            timerLbl.setText(String.format("%02d:%02d:%02d", hours, minutes, seconds));
+        }
+    });
+
+    public void startTimer() {
+        Optional<QuestionPaper> questionPaper = questionPaperService.getQuestionPaperById(questionPaperId);
+        int hours = Integer.parseInt(questionPaper.get().getDuration());
+        parsedSeconds = hours * 3600;
+        timer.start();
+    }
+
     public void setViewQuestionForm(Question question) {
         log.info("******** setting view questionForm question  - > loadQuestion() **********");
         quesTF.setText(question.getQuestion());
@@ -441,6 +444,8 @@ public class ViewQuestionFrame extends JFrame {
         String getAnswerSelected = getAnswerSelected();
         questionAnswerMap.put(question, getAnswerSelected);
         examResult.setQuestionAnswerMap(questionAnswerMap);
+        examResult.setAttemptedQuestion(examResult.getAttemptedQuestion() + 1);
+        examResult.setRemainingQuestion(examResult.getRemainingQuestion() - 1);
         if (checkQuestionResult(question, getAnswerSelected)) {
             examResult.setCorrectQuestion(examResult.getCorrectQuestion() + 1);
         } else {

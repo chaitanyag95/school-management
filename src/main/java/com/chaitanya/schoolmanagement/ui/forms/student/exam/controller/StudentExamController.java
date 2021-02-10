@@ -81,6 +81,11 @@ public class StudentExamController extends AbstractFrameController {
             }
             examResult.setPercentage(percentage);
             examResultService.save(examResult);
+            viewQuestionFrame.setVisible(false);
+            String studentId = questionPaperService.getUserIDRecordFromStore();
+            QuestionPaper questionPaper = questionPaperService.getQuestionPaperById(questionPaperService.getQuestionPaperIdFromStore()).get();
+            studentResultWindow.setExamResult(examResult, questionPaper, studentId);
+            studentResultWindow.setVisible(true);
         } catch (ArithmeticException arithmeticException) {
             System.out.println(arithmeticException.getStackTrace());
         }
@@ -126,21 +131,17 @@ public class StudentExamController extends AbstractFrameController {
                         JOptionPane.ERROR_MESSAGE);
             } else {
                 QuestionPaper questionPaper = questionPaperTableModel.getEntityByRow(selectedRow);
-                List<Question> questionList = questionService.findAllQuestionsByQuestionPaperId(questionPaper.getId());
-                String studentId = questionPaperService.getUserIDRecordFromStore();
-                viewQuestionFrame.setViewQuestionForm(questionList.get(0));
-                examResultService.saveExamResult(questionPaper.getId(), studentId);
-                viewQuestionFrame.setVisible(true);
-                /*ExamResult examResult = examResultService.getExamResultByQuestionPaperAndStudentId(questionPaper.getId(), questionPaperService.getUserIDRecordFromStore());
+                ExamResult examResult = examResultService.getExamResultByQuestionPaperAndStudentId(questionPaper.getId(), questionPaperService.getUserIDRecordFromStore());
                 if (examResult == null) {
                     List<Question> questionList = questionService.findAllQuestionsByQuestionPaperId(questionPaper.getId());
                     String studentId = questionPaperService.getUserIDRecordFromStore();
                     viewQuestionFrame.setViewQuestionForm(questionList.get(0));
+                    viewQuestionFrame.startTimer();
                     examResultService.saveExamResult(questionPaper.getId(), studentId);
                     viewQuestionFrame.setVisible(true);
                 } else {
                     Notifications.showAppearedErrorMessage();
-                }*/
+                }
             }
         } catch (Exception e) {
             Notifications.showDeleteRowErrorMessage();
