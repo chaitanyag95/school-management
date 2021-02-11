@@ -71,7 +71,6 @@ public class ViewQuestionFrame extends JFrame {
 
     private void setPanelUp() {
         setTitle(ConstMessagesEN.Labels.VIEW_QUESTION);
-        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
         setLocationRelativeTo(null);
         setResizable(false);
@@ -162,6 +161,14 @@ public class ViewQuestionFrame extends JFrame {
         prevBtn = new JButton();
         nextBtn = new JButton();
         timerLbl = new JLabel();
+
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                log.info("******* close button clicked in add window listener of init component of view question frame ********");
+                submitBtn.doClick();
+            }
+        });
 
         quesNoTF.setEditable(false);
 

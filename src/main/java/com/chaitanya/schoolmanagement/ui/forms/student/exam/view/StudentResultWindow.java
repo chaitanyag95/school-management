@@ -137,7 +137,7 @@ public class StudentResultWindow extends JFrame {
         resultLbl.setForeground(new java.awt.Color(0, 0, 0));
         resultLbl.setText("Result of -");
 
-        jLabel7.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("Pass/Failed");
 

@@ -1,6 +1,7 @@
 package com.chaitanya.schoolmanagement.util.notification;
 
 
+import com.chaitanya.schoolmanagement.ui.forms.question.view.ViewQuestionFrame;
 import com.chaitanya.schoolmanagement.util.constant.ConstMessagesEN;
 
 import javax.swing.*;
@@ -47,5 +48,19 @@ public class Notifications {
                 ConstMessagesEN.Messages.APPEARED,
                 ConstMessagesEN.Messages.ALERT_TILE,
                 JOptionPane.ERROR_MESSAGE);
+    }
+
+    public static void showLastQuestionMessage() {
+        JOptionPane.showMessageDialog(null,
+                ConstMessagesEN.Messages.LAST_QUESTION,
+                ConstMessagesEN.Messages.ALERT_TILE,
+                JOptionPane.ERROR_MESSAGE);
+    }
+
+    public static void showPreviousQuestionMessage(ViewQuestionFrame viewQuestionFrame) {
+        JOptionPane.showMessageDialog(viewQuestionFrame,
+                ConstMessagesEN.Messages.PREV_QUESTION,
+                ConstMessagesEN.Messages.ALERT_TILE,
+                JOptionPane.WARNING_MESSAGE);
     }
 }

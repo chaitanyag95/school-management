@@ -32,6 +32,8 @@ public interface ConstMessagesEN {
         String DELETED_QUESTION_PAPER = " Question Paper Successfully Deleted";
         String NOT_APPEARED = "You are not appeared in the exam";
         String APPEARED = "You are already appeared in the exam";
+        String LAST_QUESTION = "This is last question";
+        String PREV_QUESTION = "This is first question";
     }
 
     interface Labels {

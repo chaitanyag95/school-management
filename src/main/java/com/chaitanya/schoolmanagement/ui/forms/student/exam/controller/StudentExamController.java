@@ -102,7 +102,8 @@ public class StudentExamController extends AbstractFrameController {
             viewQuestionFrame.clearSelection();
             viewQuestionFrame.setVisible(true);
         } catch (NullPointerException nullPointerException) {
-            log.info("******* this is last question ********");
+            log.info("******* this is last question ******** -> from null pointer exception of getNextQuestion() -> StudentExamController ");
+            Notifications.showLastQuestionMessage();
             Question question = questionService.getQuestionById(nextQuestionPayload.getQuestionId());
             viewQuestionFrame.setVisible(false);
             viewQuestionFrame.setViewQuestionForm(question);
@@ -113,11 +114,23 @@ public class StudentExamController extends AbstractFrameController {
     }
 
     private void getPreviousQuestion() {
+
         NextQuestionPayload nextQuestionPayload = viewQuestionFrame.getQuestionNumberFromForm();
-        Question question = questionService.getPreviousQuestion(nextQuestionPayload);
-        viewQuestionFrame.setVisible(false);
-        viewQuestionFrame.setViewQuestionForm(question);
-        viewQuestionFrame.setVisible(true);
+        try {
+            Question question = questionService.getPreviousQuestion(nextQuestionPayload);
+            viewQuestionFrame.setVisible(false);
+            viewQuestionFrame.setViewQuestionForm(question);
+            viewQuestionFrame.setVisible(true);
+        } catch (NullPointerException e) {
+            log.info("******* this is first question ******** -> from null pointer exception of getPreviousQuestion() -> StudentExamController ");
+            Notifications.showPreviousQuestionMessage(viewQuestionFrame);
+            Question question = questionService.getQuestionById(nextQuestionPayload.getQuestionId());
+            viewQuestionFrame.setVisible(false);
+            viewQuestionFrame.setViewQuestionForm(question);
+            viewQuestionFrame.setVisible(true);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     private void startExam() {
@@ -147,6 +160,7 @@ public class StudentExamController extends AbstractFrameController {
             Notifications.showDeleteRowErrorMessage();
         }
     }
+
 
     @Override
     public void prepareAndOpenFrame() {

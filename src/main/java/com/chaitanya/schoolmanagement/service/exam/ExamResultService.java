@@ -62,8 +62,12 @@ public class ExamResultService {
     public ExamResult getExamResultByQuestionPaperAndStudentId(String questionPaperId, String studentId) {
         QuestionPaper questionPaper = questionPaperService.getQuestionPaperById(questionPaperId).get();
         Student student = studentService.getStudentById(studentId);
-        ExamResult examResult = examResultRepository.findByStudentAndQuestionPaper(student, questionPaper);
-        return examResult;
+        try {
+            ExamResult examResult = examResultRepository.findByStudentAndQuestionPaper(student, questionPaper);
+            return examResult;
+        } catch (Exception ex) {
+            return null;
+        }
     }
 
     public ExamResult getExamResultByIdAndStudentAndQuestionPaper(String examResultId, String studentId, String questionPaperId) {

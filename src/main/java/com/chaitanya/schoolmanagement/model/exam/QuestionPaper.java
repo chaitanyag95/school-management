@@ -30,9 +30,6 @@ public class QuestionPaper {
     private Date dateCreated = new Date();
     private Date lastUpdated;
     private String paperCode;
-    @OneToMany
-    @JoinColumn(name = "questionId")
-    private List<Question> questions;
     private String createdById;
 
 }

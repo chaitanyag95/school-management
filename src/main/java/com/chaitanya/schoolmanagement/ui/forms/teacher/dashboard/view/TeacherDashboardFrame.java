@@ -16,6 +16,8 @@ import java.awt.*;
 public class TeacherDashboardFrame extends JDialog {
     private final TeacherDashboardPanel teacherDashboardPanel;
     private final AddQuestionBtn addQuestionBtn;
+    private static final int DEFAULT_WIDTH = 750;
+    private static final int DEFAULT_HEIGHT = 400;
 
 
     @PostConstruct
@@ -28,11 +30,9 @@ public class TeacherDashboardFrame extends JDialog {
     private void setFrameUp() {
         setTitle(ConstMessagesEN.DialogTitles.TEACHER_DASHBOARD);
         setDefaultCloseOperation(HIDE_ON_CLOSE);
+        setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
         setLocationRelativeTo(null);
-        //setBounds(200, 200, 600, 600);
-        setSize(900, 980);
         setResizable(true);
-        setModal(true);
     }
 
     private void initComponents() {

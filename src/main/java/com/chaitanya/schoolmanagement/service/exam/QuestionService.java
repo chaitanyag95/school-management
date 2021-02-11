@@ -37,8 +37,8 @@ public class QuestionService {
     }
 
     public List<Question> findAllQuestionsByQuestionPaperId(String questionPaperId) {
-        Optional<QuestionPaper> questionPaper = questionPaperService.getQuestionPaperById(questionPaperId);
-        List<Question> questionList = questionRepository.findAllByQuestionPaperOrderByQuestionNoAsc(questionPaper.get());
+        //Optional<QuestionPaper> questionPaper = questionPaperService.getQuestionPaperById(questionPaperId);
+        List<Question> questionList = questionRepository.findAllByQuestionPaperOrderByQuestionNoAsc(questionPaperService.getQuestionPaperById(questionPaperId).get());
         return questionList;
     }
 

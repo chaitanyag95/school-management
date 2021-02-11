@@ -11,5 +11,7 @@ import java.util.List;
 public interface QuestionRepository extends JpaRepository<Question, String> {
     List<Question> findAllByQuestionPaperOrderByQuestionNoAsc(QuestionPaper questionPaper);
 
-    Question findByQuestionNoAndQuestionPaper(int questionNo , QuestionPaper questionPaper);
+    Question findByQuestionNoAndQuestionPaper(int questionNo, QuestionPaper questionPaper);
+
+    List<Question> findAllByQuestionPaper(QuestionPaper questionPaper);
 }
