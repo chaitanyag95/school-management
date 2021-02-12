@@ -15,11 +15,11 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.swing.*;
-import javax.swing.Timer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.*;
+import java.util.Enumeration;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 
@@ -447,16 +447,16 @@ public class ViewQuestionFrame extends JFrame {
         String questionPaperId = questionPaperService.getQuestionPaperIdFromStore();
         Question question = questionService.getQuestionById(questionId);
         ExamResult examResult = examResultService.getExamResultByIdAndStudentAndQuestionPaper(examResultId, studentId, questionPaperId);
-        Map<Question, String> questionAnswerMap = new HashMap<>();
+
         String getAnswerSelected = getAnswerSelected();
-        questionAnswerMap.put(question, getAnswerSelected);
-        examResult.setQuestionAnswerMap(questionAnswerMap);
+
+
         examResult.setAttemptedQuestion(examResult.getAttemptedQuestion() + 1);
         examResult.setRemainingQuestion(examResult.getRemainingQuestion() - 1);
         if (checkQuestionResult(question, getAnswerSelected)) {
             examResult.setCorrectQuestion(examResult.getCorrectQuestion() + 1);
         } else {
-            examResult.setCorrectQuestion(examResult.getInCorrectQuestion() + 1);
+            examResult.setInCorrectQuestion(examResult.getInCorrectQuestion() + 1);
         }
         return examResult;
     }

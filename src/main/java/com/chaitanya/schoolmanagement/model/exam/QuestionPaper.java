@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -17,9 +16,9 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Component
 public class QuestionPaper {
     @Id
+    @Column(name = "questionPaperId")
     private String id = UUID.randomUUID().toString();
     @ManyToOne
     @JoinColumn(name = "courseId")
@@ -30,6 +29,8 @@ public class QuestionPaper {
     private Date dateCreated = new Date();
     private Date lastUpdated;
     private String paperCode;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, mappedBy = "questionPaper")
+    private List<Question> questions;
     private String createdById;
 
 }

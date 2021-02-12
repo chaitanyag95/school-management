@@ -1,16 +1,13 @@
 package com.chaitanya.schoolmanagement.model.exam;
 
 import com.chaitanya.schoolmanagement.enums.ResultStatus;
-import com.chaitanya.schoolmanagement.model.student.Student;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
-import javax.persistence.*;
-import java.util.HashMap;
-import java.util.Map;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -21,14 +18,8 @@ import java.util.UUID;
 public class ExamResult {
     @Id
     private String id = UUID.randomUUID().toString();
-    @ManyToOne
-    @JoinColumn(name = "questionPaperId")
-    private QuestionPaper questionPaper;
-    @ManyToOne
-    @JoinColumn(name = "studentId")
-    private Student student;
-    @ElementCollection
-    private Map<Question, String> questionAnswerMap = new HashMap<>();
+    private String studentId;
+    private String questionPaperId;
     private int totalQuestion;
     private int attemptedQuestion = 0;
     private int remainingQuestion;

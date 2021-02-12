@@ -52,4 +52,9 @@ public class Student {
         this.email = student.getEmail();
         this.phoneNumber = student.getPhoneNumber();
     }
+
+    @Override
+    public String toString() {
+        return fullName;
+    }
 }

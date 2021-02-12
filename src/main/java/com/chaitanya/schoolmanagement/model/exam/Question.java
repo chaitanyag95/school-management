@@ -1,6 +1,5 @@
 package com.chaitanya.schoolmanagement.model.exam;
 
-import com.chaitanya.schoolmanagement.model.course.Course;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,9 +19,6 @@ import java.util.UUID;
 public class Question {
     @Id
     private String id = UUID.randomUUID().toString();
-    @ManyToOne
-    @JoinColumn(name = "courseId")
-    private Course course;
     private int questionNo;
     private String question;
     private String answerOne;
@@ -31,7 +27,9 @@ public class Question {
     private String answerFour;
     private String correctAnswer;
     @ManyToOne
-    @JoinColumn(name = "questionPaperId")
+    @JoinColumn(name = "questionPaper")
     private QuestionPaper questionPaper;
+    // Java Exam - > 10 Questions
+    // Many question have one question paper
 
 }

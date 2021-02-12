@@ -52,7 +52,7 @@ public class ExamResultService {
     public boolean isExamResultExistByQuestionPaperAndStudentId(String questionPaperId, String studentId) {
         QuestionPaper questionPaper = questionPaperService.getQuestionPaperById(questionPaperId).get();
         Student student = studentService.getStudentById(studentId);
-        ExamResult examResult = examResultRepository.findByStudentAndQuestionPaper(student, questionPaper);
+        ExamResult examResult = examResultRepository.findByStudentIdAndQuestionPaperId(studentId, questionPaperId);
         if (examResult != null) {
             return Boolean.TRUE;
         }
@@ -63,7 +63,7 @@ public class ExamResultService {
         QuestionPaper questionPaper = questionPaperService.getQuestionPaperById(questionPaperId).get();
         Student student = studentService.getStudentById(studentId);
         try {
-            ExamResult examResult = examResultRepository.findByStudentAndQuestionPaper(student, questionPaper);
+            ExamResult examResult = examResultRepository.findByStudentIdAndQuestionPaperId(studentId, questionPaperId);
             return examResult;
         } catch (Exception ex) {
             return null;
@@ -73,16 +73,16 @@ public class ExamResultService {
     public ExamResult getExamResultByIdAndStudentAndQuestionPaper(String examResultId, String studentId, String questionPaperId) {
         QuestionPaper questionPaper = questionPaperService.getQuestionPaperById(questionPaperId).get();
         Student student = studentService.getStudentById(studentId);
-        return examResultRepository.findByIdAndStudentAndQuestionPaper(examResultId, student, questionPaper);
+        return examResultRepository.findByIdAndStudentIdAndQuestionPaperId(examResultId, studentId, questionPaperId);
     }
 
     public void saveExamResult(String questionPaperId, String studentId) {
         if (!isExamResultExistByQuestionPaperAndStudentId(questionPaperId, studentId)) {
             ExamResult examResult = new ExamResult();
-            Student student = studentService.getStudentById(studentId);
-            QuestionPaper questionPaper = questionPaperService.getQuestionPaperById(questionPaperId).get();
-            examResult.setStudent(student);
-            examResult.setQuestionPaper(questionPaper);
+            /*Student student = studentService.getStudentById(studentId);
+            QuestionPaper questionPaper = questionPaperService.getQuestionPaperById(questionPaperId).get();*/
+            examResult.setStudentId(studentId);
+            examResult.setQuestionPaperId(questionPaperId);
             examResult.setTotalQuestion(questionService.findAllQuestionsByQuestionPaperId(questionPaperId).size());
             examResult.setRemainingQuestion(questionService.findAllQuestionsByQuestionPaperId(questionPaperId).size());
             examResultRepository.save(examResult);

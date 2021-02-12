@@ -2,7 +2,6 @@ package com.chaitanya.schoolmanagement.service.exam;
 
 import com.chaitanya.schoolmanagement.model.exam.Question;
 import com.chaitanya.schoolmanagement.model.exam.QuestionPaper;
-import com.chaitanya.schoolmanagement.payload.AddQuestionPaperDto;
 import com.chaitanya.schoolmanagement.payload.NextQuestionPayload;
 import com.chaitanya.schoolmanagement.repository.QuestionRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -32,14 +31,25 @@ public class QuestionService {
         question.setCorrectAnswer(question1.getCorrectAnswer());
         question.setQuestionNo(question1.getQuestionNo());
         questionRepository.save(question);
+        //addQuestionInQuestionPaper(question1.getQuestionPaper(), question);
         log.info(" ******* question successfully paper added ******** " + question.getId());
         return question;
     }
 
+    /*private void addQuestionInQuestionPaper(QuestionPaper questionPaper, Question question) {
+        log.info(" ***** saving questions in question paper class ***********");
+        List<Question> questions = new ArrayList<>();
+        questions.add(question);
+        questionPaper.setQuestions(questions);
+        questionPaperService.saveQuestionPaper(questionPaper);
+    }*/
+
     public List<Question> findAllQuestionsByQuestionPaperId(String questionPaperId) {
         //Optional<QuestionPaper> questionPaper = questionPaperService.getQuestionPaperById(questionPaperId);
-        List<Question> questionList = questionRepository.findAllByQuestionPaperOrderByQuestionNoAsc(questionPaperService.getQuestionPaperById(questionPaperId).get());
-        return questionList;
+        QuestionPaper questionPaper = questionPaperService.getQuestionPaperById(questionPaperId).get();
+        //   List<Question> questionList = questionRepository.findAllByQuestionPaper(questionPaper);
+        List<Question> questions = questionRepository.findByQuestionId(questionPaper.getId());
+        return questions;
     }
 
     public void remove(Question question) {
@@ -49,14 +59,14 @@ public class QuestionService {
     public Question getNextQuestion(NextQuestionPayload nextQuestionPayload) {
         int questionNo = nextQuestionPayload.getQuestionNo() + 1;
         Optional<QuestionPaper> questionPaper = questionPaperService.getQuestionPaperById(nextQuestionPayload.getQuestionPaperId());
-        Question question = questionRepository.findByQuestionNoAndQuestionPaper(questionNo, questionPaper.get());
+        Question question = questionRepository.findByQuestionNo(questionNo,nextQuestionPayload.getQuestionPaperId());
         return question;
     }
 
     public Question getPreviousQuestion(NextQuestionPayload nextQuestionPayload) {
         int questionNo = nextQuestionPayload.getQuestionNo() - 1;
         Optional<QuestionPaper> questionPaper = questionPaperService.getQuestionPaperById(nextQuestionPayload.getQuestionPaperId());
-        Question question = questionRepository.findByQuestionNoAndQuestionPaper(questionNo, questionPaper.get());
+        Question question = questionRepository.findByQuestionNo(questionNo,nextQuestionPayload.getQuestionPaperId());
         return question;
     }
 
